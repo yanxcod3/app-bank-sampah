@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Bank Sampah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .tab-active {
+            color: #059669;
+            border-bottom: 2px solid #059669;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-green-600 text-2xl font-bold">Bank Sampah</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html#home" class="nav-link text-gray-700 hover:text-green-600">Home</a>
+                    <a href="index.html#about" class="nav-link text-gray-700 hover:text-green-600">About</a>
+                    <a href="index.html#gallery" class="nav-link text-gray-700 hover:text-green-600">Gallery</a>
+                    <a href="index.html#contact" class="nav-link text-gray-700 hover:text-green-600">Contact</a>
+                    <a href="login.html" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition-colors">
+                        Login
+                    </a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-green-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="index.html#home" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Home</a>
+                    <a href="index.html#about" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">About</a>
+                    <a href="index.html#gallery" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Gallery</a>
+                    <a href="index.html#contact" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Contact</a>
+                    <a href="login.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-green-600 hover:bg-green-700">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Register Section -->
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg mt-12">
+            <div>
+                <h2 class="mt-6 text-center text-2xl font-extrabold text-gray-900">
+                    Daftar Akun Baru
+                </h2>
+                <p class="mt-2 text-center text-sm text-gray-600">
+                    Pilih tipe akun Anda
+                </p>
+            </div>
+
+            <!-- Role Selection Tabs -->
+            <div class="flex justify-center space-x-4 border-b">
+                <button id="nasabahTab" class="tab-active px-4 py-2 text-sm font-medium text-gray-700 hover:text-green-600 focus:outline-none">
+                    Nasabah
+                </button>
+                <button id="pengelolaTab" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-green-600 focus:outline-none">
+                    Pengelola
+                </button>
+            </div>
+
+            <!-- Nasabah Registration Form -->
+            <form id="nasabahForm" class="mt-8 space-y-6">
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div>
+                        <label for="nasabah-name" class="sr-only">Nama Lengkap</label>
+                        <input id="nasabah-name" name="name" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Nama Lengkap">
+                    </div>
+                    <div>
+                        <label for="nasabah-email" class="sr-only">Email</label>
+                        <input id="nasabah-email" name="email" type="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Email">
+                    </div>
+                    <div>
+                        <label for="nasabah-phone" class="sr-only">Nomor Telepon</label>
+                        <input id="nasabah-phone" name="phone" type="tel" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Nomor Telepon">
+                    </div>
+                    <div>
+                        <label for="nasabah-address" class="sr-only">Alamat</label>
+                        <input id="nasabah-address" name="address" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Alamat">
+                    </div>
+                    <div>
+                        <label for="nasabah-password" class="sr-only">Password</label>
+                        <input id="nasabah-password" name="password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Password">
+                    </div>
+                    <div>
+                        <label for="nasabah-confirm-password" class="sr-only">Konfirmasi Password</label>
+                        <input id="nasabah-confirm-password" name="confirm-password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Konfirmasi Password">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        Daftar sebagai Nasabah
+                    </button>
+                </div>
+            </form>
+
+            <!-- Pengelola Registration Form -->
+            <form id="pengelolaForm" class="mt-8 space-y-6 hidden">
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div>
+                        <label for="pengelola-name" class="sr-only">Nama Lengkap</label>
+                        <input id="pengelola-name" name="name" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Nama Lengkap">
+                    </div>
+                    <div>
+                        <label for="pengelola-email" class="sr-only">Email</label>
+                        <input id="pengelola-email" name="email" type="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Email">
+                    </div>
+                    <div>
+                        <label for="pengelola-phone" class="sr-only">Nomor Telepon</label>
+                        <input id="pengelola-phone" name="phone" type="tel" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Nomor Telepon">
+                    </div>
+                    <div>
+                        <label for="pengelola-organization" class="sr-only">Nama Organisasi</label>
+                        <input id="pengelola-organization" name="organization" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Nama Organisasi">
+                    </div>
+                    <div>
+                        <label for="pengelola-password" class="sr-only">Password</label>
+                        <input id="pengelola-password" name="password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Password">
+                    </div>
+                    <div>
+                        <label for="pengelola-confirm-password" class="sr-only">Konfirmasi Password</label>
+                        <input id="pengelola-confirm-password" name="confirm-password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Konfirmasi Password">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        Daftar sebagai Pengelola
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center">
+                <p class="text-sm text-gray-600">
+                    Sudah punya akun?
+                    <a href="login.html" class="font-medium text-green-600 hover:text-green-500">
+                        Login sekarang
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        const nasabahTab = document.getElementById('nasabahTab');
+        const pengelolaTab = document.getElementById('pengelolaTab');
+        const nasabahForm = document.getElementById('nasabahForm');
+        const pengelolaForm = document.getElementById('pengelolaForm');
+
+        function switchTab(tab) {
+            // Update tab styles
+            nasabahTab.classList.remove('tab-active');
+            pengelolaTab.classList.remove('tab-active');
+            tab.classList.add('tab-active');
+
+            // Show/hide forms
+            if (tab === nasabahTab) {
+                nasabahForm.classList.remove('hidden');
+                pengelolaForm.classList.add('hidden');
+            } else {
+                nasabahForm.classList.add('hidden');
+                pengelolaForm.classList.remove('hidden');
+            }
+        }
+
+        nasabahTab.addEventListener('click', () => switchTab(nasabahTab));
+        pengelolaTab.addEventListener('click', () => switchTab(pengelolaTab));
+
+        // Form submission handling
+        nasabahForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add your nasabah registration logic here
+            console.log('Nasabah registration submitted');
+        });
+
+        pengelolaForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add your pengelola registration logic here
+            console.log('Pengelola registration submitted');
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html> 

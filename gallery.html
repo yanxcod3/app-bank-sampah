@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri - Bank Sampah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .gallery-grid {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .gallery-grid.loaded {
+            opacity: 1;
+        }
+        .gallery-item {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .gallery-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .scroll-to-top {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            transition: all 0.3s ease;
+        }
+        .scroll-to-top:hover {
+            transform: translateY(-3px);
+        }
+        .scroll-to-top.show {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-green-600 text-2xl font-bold">Bank Sampah</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html#home" class="nav-link text-gray-700 hover:text-green-600">Home</a>
+                    <a href="index.html#about" class="nav-link text-gray-700 hover:text-green-600">About</a>
+                    <a href="#" class="nav-link text-green-600 font-semibold bg-green-50 px-3 py-2 rounded-md">Gallery</a>
+                    <a href="index.html#contact" class="nav-link text-gray-700 hover:text-green-600">Contact</a>
+                    <a href="login.html" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition-colors">
+                        Login
+                    </a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-green-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="index.html#home" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Home</a>
+                    <a href="index.html#about" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">About</a>
+                    <a href="#" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-green-600 bg-green-50">Gallery</a>
+                    <a href="index.html#contact" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Contact</a>
+                    <a href="login.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-green-600 hover:bg-green-700">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Gallery Header -->
+    <section class="pt-24 pb-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl">
+                    Galeri Kegiatan
+                </h1>
+                <p class="mt-4 text-xl text-gray-500">
+                    Dokumentasi kegiatan dan program Bank Sampah
+                </p>
+            </div>
+
+            <!-- Filter Categories -->
+            <div class="mt-12 flex flex-wrap justify-center gap-4">
+                <button class="filter-btn active px-6 py-2 rounded-full bg-green-600 text-white hover:bg-green-700 transition-all" data-category="all">
+                    Semua
+                </button>
+                <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-green-600 hover:text-white transition-all" data-category="kegiatan">
+                    Kegiatan
+                </button>
+                <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-green-600 hover:text-white transition-all" data-category="edukasi">
+                    Edukasi
+                </button>
+                <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-green-600 hover:text-white transition-all" data-category="hasil">
+                    Hasil Daur Ulang
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="gallery-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Gallery items will be dynamically loaded here -->
+            </div>
+            <div class="text-center mt-12">
+                <button id="loadMoreBtn" class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition-all">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Muat Lebih Banyak
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-base text-gray-400">
+                    © 2024 Bank Sampah. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top bg-green-600 text-white p-3 rounded-full shadow-lg hover:bg-green-700 focus:outline-none">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
+    <script>
+        const scrollToTopButton = document.querySelector('.scroll-to-top');
+        
+        // Show/hide scroll to top button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopButton.classList.add('show');
+            } else {
+                scrollToTopButton.classList.remove('show');
+            }
+        });
+
+        // Scroll to top functionality
+        scrollToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Sample gallery data (in real implementation, this would come from a backend)
+        const galleryItems = [
+            {
+                id: 1,
+                title: 'Kampanye Bank Sampah',
+                description: 'Kampanye kesadaran lingkungan di sekolah',
+                category: 'kegiatan',
+                imageUrl: 'https://picsum.photos/1920/1080?random=1',
+                createdAt: '2024-03-20'
+            },
+            {
+                id: 2,
+                title: 'Workshop Daur Ulang',
+                description: 'Workshop membuat kerajinan dari sampah plastik',
+                category: 'edukasi',
+                imageUrl: 'https://picsum.photos/1920/1080?random=2',
+                createdAt: '2024-03-19'
+            },
+            {
+                id: 3,
+                title: 'Event Bank Sampah',
+                description: 'Peresmian Bank Sampah di desa',
+                category: 'hasil',
+                imageUrl: 'https://picsum.photos/1920/1080?random=3',
+                createdAt: '2024-03-18'
+            },
+            {
+                id: 4,
+                title: 'Pelatihan Kompos',
+                description: 'Pelatihan pembuatan kompos dari sampah organik',
+                category: 'edukasi',
+                imageUrl: 'https://picsum.photos/1920/1080?random=4',
+                createdAt: '2024-03-17'
+            },
+            {
+                id: 5,
+                title: 'Aksi Bersih Pantai',
+                description: 'Gerakan membersihkan pantai dari sampah plastik',
+                category: 'kegiatan',
+                imageUrl: 'https://picsum.photos/1920/1080?random=5',
+                createdAt: '2024-03-16'
+            },
+            {
+                id: 6,
+                title: 'Inovasi Daur Ulang',
+                description: 'Menciptakan produk kreatif dari barang bekas',
+                category: 'hasil',
+                imageUrl: 'https://picsum.photos/1920/1080?random=6',
+                createdAt: '2024-03-15'
+            },
+            {
+                id: 7,
+                title: 'Edukasi Anak tentang Lingkungan',
+                description: 'Mengajarkan anak-anak pentingnya menjaga kebersihan',
+                category: 'edukasi',
+                imageUrl: 'https://picsum.photos/1920/1080?random=7',
+                createdAt: '2024-03-14'
+            },
+            {
+                id: 8,
+                title: 'Bank Sampah Digital',
+                description: 'Penerapan teknologi dalam pengelolaan sampah',
+                category: 'inovasi',
+                imageUrl: 'https://picsum.photos/1920/1080?random=8',
+                createdAt: '2024-03-13'
+            },
+            {
+                id: 9,
+                title: 'Pameran Produk Daur Ulang',
+                description: 'Menampilkan hasil kreativitas dari daur ulang sampah',
+                category: 'hasil',
+                imageUrl: 'https://picsum.photos/1920/1080?random=9',
+                createdAt: '2024-03-12'
+            },
+            {
+                id: 10,
+                title: 'Gerakan Tanam Pohon',
+                description: 'Kegiatan menanam pohon untuk menjaga lingkungan',
+                category: 'kegiatan',
+                imageUrl: 'https://picsum.photos/1920/1080?random=10',
+                createdAt: '2024-03-11'
+            }
+        ];
+
+        let currentItems = 0;
+        const itemsPerLoad = 6;
+        const gallery = document.querySelector('.gallery-grid');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        let currentFilter = 'all';
+
+        function createGalleryItem(item) {
+            return `
+                <div class="gallery-item bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md">
+                    <img src="${item.imageUrl}" alt="${item.title}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-gray-900">${item.title}</h3>
+                        <p class="text-gray-600 text-sm mb-2">${item.description}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full ${
+                                item.category === 'kegiatan' ? 'bg-blue-100 text-blue-800' :
+                                item.category === 'edukasi' ? 'bg-green-100 text-green-800' :
+                                item.category === 'hasil' ? 'bg-yellow-100 text-yellow-800' :
+                                'bg-gray-100 text-gray-800'
+                            }">
+                                ${item.category === 'kegiatan' ? 'Kegiatan' :
+                                  item.category === 'edukasi' ? 'Edukasi' :
+                                  item.category === 'hasil' ? 'Hasil' : 'Lainnya'}
+                            </span>
+                            <span class="text-sm text-gray-500">${new Date(item.createdAt).toLocaleDateString('id-ID')}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadItems() {
+            const filteredItems = currentFilter === 'all' 
+                ? galleryItems 
+                : galleryItems.filter(item => item.category === currentFilter);
+
+            const itemsToShow = filteredItems.slice(0, currentItems + itemsPerLoad);
+            
+            gallery.innerHTML = itemsToShow.map(createGalleryItem).join('');
+            
+            if (itemsToShow.length >= filteredItems.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'inline-flex';
+            }
+
+            currentItems = itemsToShow.length;
+            
+            // Add fade-in effect
+            setTimeout(() => {
+                gallery.classList.add('loaded');
+            }, 100);
+        }
+
+        loadMoreBtn.addEventListener('click', () => {
+            gallery.classList.remove('loaded');
+            loadItems();
+        });
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('bg-green-600', 'text-white');
+                    b.classList.add('bg-gray-200', 'text-gray-700');
+                });
+                
+                btn.classList.remove('bg-gray-200', 'text-gray-700');
+                btn.classList.add('bg-green-600', 'text-white');
+                
+                currentFilter = btn.dataset.category;
+                currentItems = 0;
+                gallery.classList.remove('loaded');
+                loadItems();
+            });
+        });
+
+        // Initial load
+        loadItems();
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Galeri - Bank Sampah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .nav-link.active {
+            color: #059669;
+            font-weight: 600;
+            background-color: #f0fdf4;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+        }
+        .gallery-item {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .gallery-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .image-preview {
+            max-width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-green-600 text-2xl font-bold">Bank Sampah</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="admin.html" class="nav-link text-gray-700 hover:text-green-600">Dashboard</a>
+                    <a href="admin-nasabah.html" class="nav-link text-gray-700 hover:text-green-600">Nasabah</a>
+                    <a href="admin-transaksi.html" class="nav-link text-gray-700 hover:text-green-600">Transaksi</a>
+                    <a href="admin-kategori.html" class="nav-link text-gray-700 hover:text-green-600">Kategori Sampah</a>
+                    <a href="admin-gallery.html" class="nav-link active text-gray-700">Galeri</a>
+                    <a href="admin-laporan.html" class="nav-link text-gray-700 hover:text-green-600">Laporan</a>
+                    <div class="relative group">
+                        <button class="flex items-center space-x-2 text-gray-700 hover:text-green-600 focus:outline-none">
+                            <span id="adminName">Admin</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="absolute right-0 w-48 mt-0 py-2 bg-white rounded-md shadow-xl hidden group-hover:block">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Settings</a>
+                            <a href="#" id="logoutBtn" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Logout</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-green-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="admin.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Dashboard</a>
+                    <a href="admin-nasabah.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Nasabah</a>
+                    <a href="admin-transaksi.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Transaksi</a>
+                    <a href="admin-kategori.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Kategori Sampah</a>
+                    <a href="admin-gallery.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-green-600">Galeri</a>
+                    <a href="admin-laporan.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Laporan</a>
+                    <a href="#" id="mobileLogoutBtn" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-red-600 hover:bg-red-700">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="pt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Kelola Galeri</h1>
+                <button id="addImageBtn" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <svg class="inline-block w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                    Tambah Gambar
+                </button>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Cari Gambar</label>
+                        <input type="text" id="searchInput" class="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Judul atau deskripsi">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+                        <select id="categoryFilter" class="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <option value="all">Semua</option>
+                            <option value="kegiatan">Kegiatan</option>
+                            <option value="hasil">Hasil</option>
+                            <option value="edukasi">Edukasi</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Urutkan</label>
+                        <select id="sortBy" class="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <option value="newest">Terbaru</option>
+                            <option value="oldest">Terlama</option>
+                            <option value="title">Judul</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="galleryGrid">
+                <!-- Gallery items will be dynamically added here -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 mt-6">
+                <div class="flex-1 flex justify-between sm:hidden">
+                    <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Sebelumnya
+                    </button>
+                    <button class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Selanjutnya
+                    </button>
+                </div>
+                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm text-gray-700">
+                            Menampilkan
+                            <span class="font-medium" id="startIndex">1</span>
+                            sampai
+                            <span class="font-medium" id="endIndex">9</span>
+                            dari
+                            <span class="font-medium" id="totalItems">0</span>
+                            hasil
+                        </p>
+                    </div>
+                    <div>
+                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                            <button class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                <span class="sr-only">Previous</span>
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                            <button class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                <span class="sr-only">Next</span>
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Image Modal -->
+    <div id="imageModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
+        <div class="relative top-20 mx-auto p-8 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <h3 class="text-lg font-medium text-gray-900 mb-4" id="modalTitle">Tambah Gambar Baru</h3>
+                <form id="imageForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Judul</label>
+                        <input type="text" id="imageTitle" name="imageTitle" class="mt-1 block w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
+                        <textarea id="imageDescription" name="imageDescription" rows="3" class="mt-1 block w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Kategori</label>
+                        <select id="imageCategory" name="imageCategory" class="mt-1 block w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <option value="kegiatan">Kegiatan</option>
+                            <option value="hasil">Hasil</option>
+                            <option value="edukasi">Edukasi</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Gambar</label>
+                        <input type="file" id="imageFile" name="imageFile" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
+                        <div id="imagePreview" class="mt-2 hidden">
+                            <img src="" alt="Preview" class="image-preview rounded-md">
+                        </div>
+                    </div>
+                </form>
+                <div class="mt-4 flex justify-end space-x-3">
+                    <button type="button" id="cancelImageBtn" class="px-4 py-2 bg-gray-300 text-gray-700 text-base font-medium rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        Batal
+                    </button>
+                    <button type="submit" form="imageForm" class="px-4 py-2 bg-green-600 text-white text-base font-medium rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        Simpan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dummy data for demonstration
+        const dummyImages = [
+            {
+                id: 1,
+                title: 'Kampanye Bank Sampah',
+                description: 'Kampanye kesadaran lingkungan di sekolah',
+                category: 'kegiatan',
+                imageUrl: 'https://picsum.photos/1920/1080?random=1',
+                createdAt: '2024-03-20'
+            },
+            {
+                id: 2,
+                title: 'Workshop Daur Ulang',
+                description: 'Workshop membuat kerajinan dari sampah plastik',
+                category: 'edukasi',
+                imageUrl: 'https://picsum.photos/1920/1080?random=2',
+                createdAt: '2024-03-19'
+            },
+            {
+                id: 3,
+                title: 'Event Bank Sampah',
+                description: 'Peresmian Bank Sampah di desa',
+                category: 'hasil',
+                imageUrl: 'https://picsum.photos/1920/1080?random=3',
+                createdAt: '2024-03-18'
+            },
+            {
+                id: 4,
+                title: 'Pelatihan Kompos',
+                description: 'Pelatihan pembuatan kompos dari sampah organik',
+                category: 'edukasi',
+                imageUrl: 'https://picsum.photos/1920/1080?random=4',
+                createdAt: '2024-03-17'
+            },
+            {
+                id: 5,
+                title: 'Aksi Bersih Pantai',
+                description: 'Gerakan membersihkan pantai dari sampah plastik',
+                category: 'kegiatan',
+                imageUrl: 'https://picsum.photos/1920/1080?random=5',
+                createdAt: '2024-03-16'
+            },
+            {
+                id: 6,
+                title: 'Inovasi Daur Ulang',
+                description: 'Menciptakan produk kreatif dari barang bekas',
+                category: 'hasil',
+                imageUrl: 'https://picsum.photos/1920/1080?random=6',
+                createdAt: '2024-03-15'
+            },
+            {
+                id: 7,
+                title: 'Edukasi Anak tentang Lingkungan',
+                description: 'Mengajarkan anak-anak pentingnya menjaga kebersihan',
+                category: 'edukasi',
+                imageUrl: 'https://picsum.photos/1920/1080?random=7',
+                createdAt: '2024-03-14'
+            },
+            {
+                id: 8,
+                title: 'Bank Sampah Digital',
+                description: 'Penerapan teknologi dalam pengelolaan sampah',
+                category: 'inovasi',
+                imageUrl: 'https://picsum.photos/1920/1080?random=8',
+                createdAt: '2024-03-13'
+            },
+            {
+                id: 9,
+                title: 'Pameran Produk Daur Ulang',
+                description: 'Menampilkan hasil kreativitas dari daur ulang sampah',
+                category: 'hasil',
+                imageUrl: 'https://picsum.photos/1920/1080?random=9',
+                createdAt: '2024-03-12'
+            },
+            {
+                id: 10,
+                title: 'Gerakan Tanam Pohon',
+                description: 'Kegiatan menanam pohon untuk menjaga lingkungan',
+                category: 'kegiatan',
+                imageUrl: 'https://picsum.photos/1920/1080?random=10',
+                createdAt: '2024-03-11'
+            }
+        ];
+
+        // State management
+        let currentImages = [...dummyImages];
+        let currentPage = 1;
+        const itemsPerPage = 9;
+        let editingImageId = null;
+
+        // DOM Elements
+        const galleryGrid = document.getElementById('galleryGrid');
+        const imageModal = document.getElementById('imageModal');
+        const imageForm = document.getElementById('imageForm');
+        const addImageBtn = document.getElementById('addImageBtn');
+        const saveImageBtn = document.getElementById('saveImageBtn');
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const sortBy = document.getElementById('sortBy');
+        const imageFile = document.getElementById('imageFile');
+        const imagePreview = document.getElementById('imagePreview');
+
+        // Check if user is logged in and is admin
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        // Update UI with user data
+        document.getElementById('adminName').textContent = user.name;
+
+        // Render gallery items
+        function renderGallery() {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedImages = currentImages.slice(startIndex, endIndex);
+
+            galleryGrid.innerHTML = '';
+            paginatedImages.forEach(image => {
+                const card = document.createElement('div');
+                card.className = 'gallery-item bg-white rounded-lg shadow-sm overflow-hidden';
+                card.innerHTML = `
+                    <img src="${image.imageUrl}" alt="${image.title}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-gray-900">${image.title}</h3>
+                        <p class="text-gray-600 text-sm mb-2">${image.description}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full ${
+                                image.category === 'kegiatan' ? 'bg-blue-100 text-blue-800' :
+                                image.category === 'edukasi' ? 'bg-green-100 text-green-800' :
+                                image.category === 'hasil' ? 'bg-yellow-100 text-yellow-800' :
+                                'bg-gray-100 text-gray-800'
+                            }">
+                                ${image.category === 'kegiatan' ? 'Kegiatan' :
+                                  image.category === 'edukasi' ? 'Edukasi' :
+                                  image.category === 'hasil' ? 'Hasil' : 'Lainnya'}
+                            </span>
+                            <span class="text-sm text-gray-500">${new Date(image.createdAt).toLocaleDateString('id-ID')}</span>
+                        </div>
+                        <div class="mt-4 flex justify-end space-x-3">
+                            <button onclick="editImage(${image.id})" class="text-green-600 hover:text-green-900">Edit</button>
+                            <button onclick="deleteImage(${image.id})" class="text-red-600 hover:text-red-900">Hapus</button>
+                        </div>
+                    </div>
+                `;
+                galleryGrid.appendChild(card);
+            });
+
+            // Update pagination info
+            document.getElementById('startIndex').textContent = startIndex + 1;
+            document.getElementById('endIndex').textContent = Math.min(endIndex, currentImages.length);
+            document.getElementById('totalItems').textContent = currentImages.length;
+        }
+
+        // Show modal for adding/editing image
+        function showImageModal(image = null) {
+            editingImageId = image ? image.id : null;
+            document.getElementById('modalTitle').textContent = image ? 'Edit Gambar' : 'Tambah Gambar Baru';
+            
+            if (image) {
+                document.getElementById('imageTitle').value = image.title;
+                document.getElementById('imageDescription').value = image.description;
+                document.getElementById('imageCategory').value = image.category;
+                imagePreview.classList.remove('hidden');
+                imagePreview.querySelector('img').src = image.imageUrl;
+            } else {
+                imageForm.reset();
+                imagePreview.classList.add('hidden');
+            }
+
+            imageModal.classList.remove('hidden');
+        }
+
+        // Handle form submission
+        function handleImageSubmit(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(imageForm);
+            const imageData = {
+                title: formData.get('imageTitle'),
+                description: formData.get('imageDescription'),
+                category: formData.get('imageCategory')
+            };
+
+            if (editingImageId) {
+                // Update existing image
+                const index = currentImages.findIndex(i => i.id === editingImageId);
+                if (index !== -1) {
+                    currentImages[index] = { ...currentImages[index], ...imageData };
+                }
+            } else {
+                // Add new image
+                const newImage = {
+                    id: currentImages.length + 1,
+                    ...imageData,
+                    imageUrl: imagePreview.querySelector('img').src || 'https://picsum.photos/1920/1080??recycling',
+                    createdAt: new Date().toISOString().split('T')[0]
+                };
+                currentImages.push(newImage);
+            }
+
+            imageModal.classList.add('hidden');
+            renderGallery();
+        }
+
+        // Edit image
+        function editImage(id) {
+            const image = currentImages.find(i => i.id === id);
+            if (image) {
+                showImageModal(image);
+            }
+        }
+
+        // Delete image
+        function deleteImage(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus gambar ini?')) {
+                currentImages = currentImages.filter(i => i.id !== id);
+                renderGallery();
+            }
+        }
+
+        // Filter and search images
+        function filterImages() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const categoryValue = categoryFilter.value;
+            const sortValue = sortBy.value;
+
+            let filtered = [...dummyImages];
+
+            // Apply search
+            if (searchTerm) {
+                filtered = filtered.filter(image => 
+                    image.title.toLowerCase().includes(searchTerm) ||
+                    image.description.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Apply category filter
+            if (categoryValue !== 'all') {
+                filtered = filtered.filter(image => image.category === categoryValue);
+            }
+
+            // Apply sorting
+            filtered.sort((a, b) => {
+                switch (sortValue) {
+                    case 'newest':
+                        return new Date(b.createdAt) - new Date(a.createdAt);
+                    case 'oldest':
+                        return new Date(a.createdAt) - new Date(b.createdAt);
+                    case 'title':
+                        return a.title.localeCompare(b.title);
+                    default:
+                        return 0;
+                }
+            });
+
+            currentImages = filtered;
+            currentPage = 1;
+            renderGallery();
+        }
+
+        // Preview image before upload
+        imageFile.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.classList.remove('hidden');
+                    imagePreview.querySelector('img').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Event listeners
+        addImageBtn.addEventListener('click', () => showImageModal());
+        imageForm.addEventListener('submit', handleImageSubmit);
+        searchInput.addEventListener('input', filterImages);
+        categoryFilter.addEventListener('change', filterImages);
+        sortBy.addEventListener('change', filterImages);
+
+        document.getElementById('cancelImageBtn').addEventListener('click', () => {
+            imageModal.classList.add('hidden');
+        });
+
+        // Logout functionality
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+        document.getElementById('mobileLogoutBtn').addEventListener('click', logout);
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Initialize the page
+        renderGallery();
+    </script>
+</body>
+</html> 

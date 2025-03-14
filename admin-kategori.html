@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Kategori Sampah - Bank Sampah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .nav-link.active {
+            color: #059669;
+            font-weight: 600;
+            background-color: #f0fdf4;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+        }
+        .category-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .category-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-green-600 text-2xl font-bold">Bank Sampah</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="admin.html" class="nav-link text-gray-700 hover:text-green-600">Dashboard</a>
+                    <a href="admin-nasabah.html" class="nav-link text-gray-700 hover:text-green-600">Nasabah</a>
+                    <a href="admin-transaksi.html" class="nav-link text-gray-700 hover:text-green-600">Transaksi</a>
+                    <a href="admin-kategori.html" class="nav-link active text-gray-700">Kategori Sampah</a>
+                    <a href="admin-gallery.html" class="nav-link text-gray-700 hover:text-green-600">Galeri</a>
+                    <a href="admin-laporan.html" class="nav-link text-gray-700 hover:text-green-600">Laporan</a>
+                    <div class="relative group">
+                        <button class="flex items-center space-x-2 text-gray-700 hover:text-green-600 focus:outline-none">
+                            <span id="adminName">Admin</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="absolute right-0 w-48 mt-0 py-2 bg-white rounded-md shadow-xl hidden group-hover:block">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Settings</a>
+                            <a href="#" id="logoutBtn" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Logout</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-green-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="admin.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Dashboard</a>
+                    <a href="admin-nasabah.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Nasabah</a>
+                    <a href="admin-transaksi.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Transaksi</a>
+                    <a href="admin-kategori.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-green-600">Kategori Sampah</a>
+                    <a href="admin-gallery.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Galeri</a>
+                    <a href="admin-laporan.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Laporan</a>
+                    <a href="#" id="mobileLogoutBtn" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-red-600 hover:bg-red-700">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="pt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Kelola Kategori Sampah</h1>
+                <button id="addCategoryBtn" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <svg class="inline-block w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                    Tambah Kategori
+                </button>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Cari Kategori</label>
+                        <input type="text" id="searchInput" class="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Nama kategori">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                        <select id="statusFilter" class="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <option value="all">Semua</option>
+                            <option value="active">Aktif</option>
+                            <option value="inactive">Tidak Aktif</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Urutkan</label>
+                        <select id="sortBy" class="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <option value="name">Nama</option>
+                            <option value="price">Harga</option>
+                            <option value="amount">Jumlah Terkumpul</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="categoryGrid">
+                <!-- Categories will be dynamically added here -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 mt-6">
+                <div class="flex-1 flex justify-between sm:hidden">
+                    <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Sebelumnya
+                    </button>
+                    <button class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Selanjutnya
+                    </button>
+                </div>
+                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm text-gray-700">
+                            Menampilkan
+                            <span class="font-medium" id="startIndex">1</span>
+                            sampai
+                            <span class="font-medium" id="endIndex">10</span>
+                            dari
+                            <span class="font-medium" id="totalItems">0</span>
+                            hasil
+                        </p>
+                    </div>
+                    <div>
+                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                            <button class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                <span class="sr-only">Previous</span>
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                            <button class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                <span class="sr-only">Next</span>
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Category Modal -->
+    <div id="categoryModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
+        <div class="relative top-20 mx-auto p-8 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <h3 class="text-lg font-medium text-gray-900 mb-4" id="modalTitle">Tambah Kategori Baru</h3>
+                <form id="categoryForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nama Kategori</label>
+                        <input type="text" id="categoryName" name="categoryName" class="mt-1 block w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Harga per kg</label>
+                        <input type="number" id="price" name="price" class="mt-1 block w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
+                        <textarea id="description" name="description" rows="3" class="mt-1 block w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Status</label>
+                        <select id="status" name="status" class="mt-1 block w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <option value="active">Aktif</option>
+                            <option value="inactive">Tidak Aktif</option>
+                        </select>
+                    </div>
+                </form>
+                <div class="mt-4 flex justify-end space-x-3">
+                    <button type="button" id="cancelCategoryBtn" class="px-4 py-2 bg-gray-300 text-gray-700 text-base font-medium rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        Batal
+                    </button>
+                    <button type="submit" form="categoryForm" class="px-4 py-2 bg-green-600 text-white text-base font-medium rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        Simpan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dummy data for demonstration
+        const dummyCategories = [
+            {
+                id: 1,
+                name: 'Plastik',
+                price: 5000,
+                description: 'Botol plastik, kantong plastik, dan sampah plastik lainnya',
+                status: 'active',
+                totalCollected: 1500,
+                createdAt: '2024-01-15'
+            },
+            {
+                id: 2,
+                name: 'Kertas',
+                price: 3000,
+                description: 'Kertas bekas, koran, majalah, dan kardus',
+                status: 'active',
+                totalCollected: 2500,
+                createdAt: '2024-01-15'
+            },
+            {
+                id: 3,
+                name: 'Botol',
+                price: 7000,
+                description: 'Botol kaca dan botol plastik berkualitas tinggi',
+                status: 'active',
+                totalCollected: 800,
+                createdAt: '2024-02-01'
+            }
+        ];
+
+        // State management
+        let currentCategories = [...dummyCategories];
+        let currentPage = 1;
+        const itemsPerPage = 9;
+        let editingCategoryId = null;
+
+        // DOM Elements
+        const categoryGrid = document.getElementById('categoryGrid');
+        const categoryModal = document.getElementById('categoryModal');
+        const categoryForm = document.getElementById('categoryForm');
+        const addCategoryBtn = document.getElementById('addCategoryBtn');
+        const saveCategoryBtn = document.getElementById('saveCategoryBtn');
+        const searchInput = document.getElementById('searchInput');
+        const statusFilter = document.getElementById('statusFilter');
+        const sortBy = document.getElementById('sortBy');
+
+        // Check if user is logged in and is admin
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        // Update UI with user data
+        document.getElementById('adminName').textContent = user.name;
+
+        // Render categories
+        function renderCategories() {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedCategories = currentCategories.slice(startIndex, endIndex);
+
+            categoryGrid.innerHTML = '';
+            paginatedCategories.forEach(category => {
+                const card = document.createElement('div');
+                card.className = 'category-card bg-white rounded-lg shadow-sm p-6';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900">${category.name}</h3>
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            category.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                        }">
+                            ${category.status === 'active' ? 'Aktif' : 'Tidak Aktif'}
+                        </span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">${category.description}</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Harga per kg:</span>
+                            <span class="font-medium">Rp ${category.price.toLocaleString()}</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Total Terkumpul:</span>
+                            <span class="font-medium">${category.totalCollected} kg</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Dibuat:</span>
+                            <span class="font-medium">${new Date(category.createdAt).toLocaleDateString('id-ID')}</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex justify-end space-x-3">
+                        <button onclick="editCategory(${category.id})" class="text-green-600 hover:text-green-900">Edit</button>
+                        <button onclick="deleteCategory(${category.id})" class="text-red-600 hover:text-red-900">Hapus</button>
+                    </div>
+                `;
+                categoryGrid.appendChild(card);
+            });
+
+            // Update pagination info
+            document.getElementById('startIndex').textContent = startIndex + 1;
+            document.getElementById('endIndex').textContent = Math.min(endIndex, currentCategories.length);
+            document.getElementById('totalItems').textContent = currentCategories.length;
+        }
+
+        // Show modal for adding/editing category
+        function showCategoryModal(category = null) {
+            editingCategoryId = category ? category.id : null;
+            document.getElementById('modalTitle').textContent = category ? 'Edit Kategori' : 'Tambah Kategori Baru';
+            
+            if (category) {
+                document.getElementById('categoryName').value = category.name;
+                document.getElementById('price').value = category.price;
+                document.getElementById('description').value = category.description;
+                document.getElementById('status').value = category.status;
+            } else {
+                categoryForm.reset();
+            }
+
+            categoryModal.classList.remove('hidden');
+        }
+
+        // Handle form submission
+        function handleCategorySubmit(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(categoryForm);
+            const categoryData = {
+                name: formData.get('categoryName'),
+                price: parseFloat(formData.get('price')),
+                description: formData.get('description'),
+                status: formData.get('status')
+            };
+
+            if (editingCategoryId) {
+                // Update existing category
+                const index = currentCategories.findIndex(c => c.id === editingCategoryId);
+                if (index !== -1) {
+                    currentCategories[index] = { ...currentCategories[index], ...categoryData };
+                }
+            } else {
+                // Add new category
+                const newCategory = {
+                    id: currentCategories.length + 1,
+                    ...categoryData,
+                    totalCollected: 0,
+                    createdAt: new Date().toISOString().split('T')[0]
+                };
+                currentCategories.push(newCategory);
+            }
+
+            categoryModal.classList.add('hidden');
+            renderCategories();
+        }
+
+        // Edit category
+        function editCategory(id) {
+            const category = currentCategories.find(c => c.id === id);
+            if (category) {
+                showCategoryModal(category);
+            }
+        }
+
+        // Delete category
+        function deleteCategory(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus kategori ini?')) {
+                currentCategories = currentCategories.filter(c => c.id !== id);
+                renderCategories();
+            }
+        }
+
+        // Filter and search categories
+        function filterCategories() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const statusValue = statusFilter.value;
+            const sortValue = sortBy.value;
+
+            let filtered = [...dummyCategories];
+
+            // Apply search
+            if (searchTerm) {
+                filtered = filtered.filter(category => 
+                    category.name.toLowerCase().includes(searchTerm) ||
+                    category.description.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Apply status filter
+            if (statusValue !== 'all') {
+                filtered = filtered.filter(category => category.status === statusValue);
+            }
+
+            // Apply sorting
+            filtered.sort((a, b) => {
+                switch (sortValue) {
+                    case 'name':
+                        return a.name.localeCompare(b.name);
+                    case 'price':
+                        return b.price - a.price;
+                    case 'amount':
+                        return b.totalCollected - a.totalCollected;
+                    default:
+                        return 0;
+                }
+            });
+
+            currentCategories = filtered;
+            currentPage = 1;
+            renderCategories();
+        }
+
+        // Event listeners
+        addCategoryBtn.addEventListener('click', () => showCategoryModal());
+        categoryForm.addEventListener('submit', handleCategorySubmit);
+        searchInput.addEventListener('input', filterCategories);
+        statusFilter.addEventListener('change', filterCategories);
+        sortBy.addEventListener('change', filterCategories);
+
+        document.getElementById('cancelCategoryBtn').addEventListener('click', () => {
+            categoryModal.classList.add('hidden');
+        });
+
+        // Logout functionality
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+        document.getElementById('mobileLogoutBtn').addEventListener('click', logout);
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Initialize the page
+        renderCategories();
+    </script>
+</body>
+</html> 

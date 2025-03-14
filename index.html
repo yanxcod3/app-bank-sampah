@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Sampah - Solusi Pengelolaan Sampah Modern</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .nav-link.active, .mobile-nav-link.active {
+            color: #059669;
+            font-weight: 600;
+            background-color: #f0fdf4;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+        }
+        .scroll-to-top {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            transition: all 0.3s ease;
+        }
+        .scroll-to-top:hover {
+            transform: translateY(-3px);
+        }
+        .scroll-to-top.show {
+            display: flex;
+        }
+        @keyframes blob {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+            }
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+            100% {
+                transform: translate(0px, 0px) scale(1);
+            }
+        }
+
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+
+        .gallery-grid {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .gallery-grid.loaded {
+            opacity: 1;
+        }
+        .gallery-item {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .gallery-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-green-600 text-2xl font-bold">Bank Sampah</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-gray-700 hover:text-green-600">Home</a>
+                    <a href="#about" class="nav-link text-gray-700 hover:text-green-600">About</a>
+                    <a href="#gallery" class="nav-link text-gray-700 hover:text-green-600">Gallery</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-green-600">Contact</a>
+                    <a href="login.html" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition-colors">
+                        Login
+                    </a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-green-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="#home" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Home</a>
+                    <a href="#about" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">About</a>
+                    <a href="#gallery" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Gallery</a>
+                    <a href="#contact" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Contact</a>
+                    <a href="login.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-green-600 hover:bg-green-700">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen relative overflow-hidden flex items-center">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 bg-gradient-to-br from-green-50 via-white to-green-100">
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute top-0 left-0 w-full h-full" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23059669\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+            </div>
+        </div>
+
+        <!-- Decorative Elements -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute -top-40 -right-40 w-80 h-80 bg-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-green-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div class="absolute top-40 left-40 w-80 h-80 bg-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center">
+                <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl lg:text-7xl">
+                    <span class="block">Wujudkan Lingkungan Bersih</span>
+                    <span class="block text-green-600">dengan Bank Sampah</span>
+                </h1>
+                <p class="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+                    Solusi modern untuk pengelolaan sampah yang berkelanjutan. Mari bergabung dalam gerakan peduli lingkungan!
+                </p>
+                <div class="mt-8 max-w-md mx-auto sm:flex sm:justify-center md:mt-12">
+                    <div class="rounded-md shadow">
+                        <a href="#contact" class="w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 md:py-5 md:text-lg md:px-12 transition-all duration-300 transform hover:-translate-y-1">
+                            Mulai Sekarang
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Tentang Bank Sampah
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                    Kami adalah solusi untuk pengelolaan sampah yang lebih baik dan berkelanjutan, dengan pendekatan inovatif dan ramah lingkungan untuk menciptakan masa depan yang lebih hijau.
+                </p>
+            </div>
+
+            <div class="mt-20">
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+                    <div class="text-center">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-md bg-green-500 text-white mx-auto">
+                            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="mt-4 text-xl font-medium text-gray-900">Efisien</h3>
+                        <p class="mt-2 text-gray-500">
+                            Sistem pengelolaan sampah yang terorganisir dan efisien
+                        </p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-md bg-green-500 text-white mx-auto">
+                            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="mt-4 text-xl font-medium text-gray-900">Berkelanjutan</h3>
+                        <p class="mt-2 text-gray-500">
+                            Mendukung program daur ulang dan pengolahan sampah
+                        </p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-md bg-green-500 text-white mx-auto">
+                            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="mt-4 text-xl font-medium text-gray-900">Menguntungkan</h3>
+                        <p class="mt-2 text-gray-500">
+                            Mendapatkan nilai ekonomis dari pengelolaan sampah
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Galeri Kegiatan
+                </h2>
+                <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
+                    Dokumentasi kegiatan dan program Bank Sampah dalam mengelola sampah menjadi sesuatu yang bernilai.
+                </p>
+            </div>
+            <div class="mt-12">
+                <div id="gallery-grid" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    <!-- Gallery items will be loaded here -->
+                </div>
+                <div class="mt-12 text-center space-y-4">
+                    <button id="loadMoreBtn" class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition-all">
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Muat Lebih Banyak
+                    </button>
+                    <a href="gallery.html" id="viewAllGalleryBtn" class="hidden inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-green-600 bg-white border-green-600 hover:bg-green-50 transition-all">
+                        Lihat Semua Galeri
+                        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Hubungi Kami
+                </h2>
+                <p class="mt-4 text-lg text-gray-500">
+                    Punya pertanyaan? Jangan ragu untuk menghubungi kami.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Information -->
+                <div class="bg-green-50 rounded-2xl p-8 shadow-sm">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-6">Informasi Kontak</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0">
+                                <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-medium text-gray-900">Lokasi</h4>
+                                <p class="mt-1 text-gray-600">Jl. Contoh No. 123, Kota, Indonesia</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0">
+                                <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-medium text-gray-900">Email</h4>
+                                <p class="mt-1 text-gray-600">info@banksampah.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0">
+                                <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-medium text-gray-900">Telepon</h4>
+                                <p class="mt-1 text-gray-600">+62 123 4567 890</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg">
+                    <form action="#" method="POST" class="space-y-6">
+                        <div class="grid grid-cols-1 gap-y-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Nama</label>
+                                <input type="text" name="name" id="name" placeholder="Masukkan nama lengkap" class="mt-1 block w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition duration-150">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" name="email" id="email" placeholder="nama@email.com" class="mt-1 block w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition duration-150">
+                            </div>
+                            <div>
+                                <label for="subject" class="block text-sm font-medium text-gray-700">Subjek</label>
+                                <input type="text" name="subject" id="subject" placeholder="Subjek pesan" class="mt-1 block w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition duration-150">
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700">Pesan</label>
+                                <textarea name="message" id="message" rows="4" placeholder="Tulis pesan Anda di sini..." class="mt-1 block w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition duration-150"></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" class="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                    </svg>
+                                    Kirim Pesan
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-base text-gray-400">
+                    © 2024 Bank Sampah. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top bg-green-600 text-white p-3 rounded-full shadow-lg hover:bg-green-700 focus:outline-none">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Active section detection and scroll to top button visibility
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+        const scrollToTopButton = document.querySelector('.scroll-to-top');
+
+        function updateActiveSection() {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Show/hide scroll to top button
+            if (window.pageYOffset > 300) {
+                scrollToTopButton.classList.add('show');
+            } else {
+                scrollToTopButton.classList.remove('show');
+            }
+        }
+
+        window.addEventListener('scroll', updateActiveSection);
+        window.addEventListener('load', updateActiveSection);
+
+        // Scroll to top functionality
+        scrollToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Gallery functionality
+        const galleryItems = [
+            {
+                id: 1,
+                title: 'Kampanye Bank Sampah',
+                description: 'Kampanye kesadaran lingkungan di sekolah',
+                category: 'kegiatan',
+                imageUrl: 'https://picsum.photos/1920/1080?random=1',
+                createdAt: '2024-03-20'
+            },
+            {
+                id: 2,
+                title: 'Workshop Daur Ulang',
+                description: 'Workshop membuat kerajinan dari sampah plastik',
+                category: 'edukasi',
+                imageUrl: 'https://picsum.photos/1920/1080?random=2',
+                createdAt: '2024-03-19'
+            },
+            {
+                id: 3,
+                title: 'Event Bank Sampah',
+                description: 'Peresmian Bank Sampah di desa',
+                category: 'hasil',
+                imageUrl: 'https://picsum.photos/1920/1080?random=3',
+                createdAt: '2024-03-18'
+            },
+            {
+                id: 4,
+                title: 'Pelatihan Kompos',
+                description: 'Pelatihan pembuatan kompos dari sampah organik',
+                category: 'edukasi',
+                imageUrl: 'https://picsum.photos/1920/1080?random=4',
+                createdAt: '2024-03-17'
+            },
+            {
+                id: 5,
+                title: 'Aksi Bersih Pantai',
+                description: 'Gerakan membersihkan pantai dari sampah plastik',
+                category: 'kegiatan',
+                imageUrl: 'https://picsum.photos/1920/1080?random=5',
+                createdAt: '2024-03-16'
+            },
+            {
+                id: 6,
+                title: 'Inovasi Daur Ulang',
+                description: 'Menciptakan produk kreatif dari barang bekas',
+                category: 'hasil',
+                imageUrl: 'https://picsum.photos/1920/1080?random=6',
+                createdAt: '2024-03-15'
+            },
+            {
+                id: 7,
+                title: 'Edukasi Anak tentang Lingkungan',
+                description: 'Mengajarkan anak-anak pentingnya menjaga kebersihan',
+                category: 'edukasi',
+                imageUrl: 'https://picsum.photos/1920/1080?random=7',
+                createdAt: '2024-03-14'
+            },
+            {
+                id: 8,
+                title: 'Bank Sampah Digital',
+                description: 'Penerapan teknologi dalam pengelolaan sampah',
+                category: 'inovasi',
+                imageUrl: 'https://picsum.photos/1920/1080?random=8',
+                createdAt: '2024-03-13'
+            },
+            {
+                id: 9,
+                title: 'Pameran Produk Daur Ulang',
+                description: 'Menampilkan hasil kreativitas dari daur ulang sampah',
+                category: 'hasil',
+                imageUrl: 'https://picsum.photos/1920/1080?random=9',
+                createdAt: '2024-03-12'
+            },
+            {
+                id: 10,
+                title: 'Gerakan Tanam Pohon',
+                description: 'Kegiatan menanam pohon untuk menjaga lingkungan',
+                category: 'kegiatan',
+                imageUrl: 'https://picsum.photos/1920/1080?random=10',
+                createdAt: '2024-03-11'
+            }
+        ];
+
+        let currentItems = 0;
+        const itemsPerLoad = 3;
+        const galleryGrid = document.getElementById('gallery-grid');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+        function createGalleryItem(item) {
+            return `
+                <div class="gallery-item bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md">
+                    <img src="${item.imageUrl}" alt="${item.title}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-gray-900">${item.title}</h3>
+                        <p class="text-gray-600 text-sm mb-2">${item.description}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full ${
+                                item.category === 'kegiatan' ? 'bg-blue-100 text-blue-800' :
+                                item.category === 'edukasi' ? 'bg-green-100 text-green-800' :
+                                item.category === 'hasil' ? 'bg-yellow-100 text-yellow-800' :
+                                'bg-gray-100 text-gray-800'
+                            }">
+                                ${item.category === 'kegiatan' ? 'Kegiatan' :
+                                  item.category === 'edukasi' ? 'Edukasi' :
+                                  item.category === 'hasil' ? 'Hasil' : 'Lainnya'}
+                            </span>
+                            <span class="text-sm text-gray-500">${new Date(item.createdAt).toLocaleDateString('id-ID')}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadItems() {
+            const itemsToShow = galleryItems.slice(0, currentItems + itemsPerLoad);
+            galleryGrid.innerHTML = itemsToShow.map(createGalleryItem).join('');
+            
+            currentItems = itemsToShow.length;
+            
+            // After first load, hide load more button and show view all button
+            if (currentItems > itemsPerLoad) {
+                loadMoreBtn.style.display = 'none';
+                document.getElementById('viewAllGalleryBtn').classList.remove('hidden');
+            }
+
+            // Add fade-in effect
+            setTimeout(() => {
+                galleryGrid.classList.add('loaded');
+            }, 100);
+        }
+
+        // Remove loaded class before loading new items
+        loadMoreBtn.addEventListener('click', () => {
+            galleryGrid.classList.remove('loaded');
+            loadItems();
+        });
+
+        // Initial load
+        loadItems();
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html> 

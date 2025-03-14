@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Bank Sampah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .nav-link.active {
+            color: #059669;
+            font-weight: 600;
+            background-color: #f0fdf4;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+        }
+        .transaction-row {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .transaction-row:hover {
+            background-color: #f9fafb;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-green-600 text-2xl font-bold">Bank Sampah</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="admin.html" class="nav-link active text-gray-700">Dashboard</a>
+                    <a href="admin-nasabah.html" class="nav-link text-gray-700 hover:text-green-600">Nasabah</a>
+                    <a href="admin-transaksi.html" class="nav-link text-gray-700 hover:text-green-600">Transaksi</a>
+                    <a href="admin-kategori.html" class="nav-link text-gray-700 hover:text-green-600">Kategori Sampah</a>
+                    <a href="admin-gallery.html" class="nav-link text-gray-700 hover:text-green-600">Galeri</a>
+                    <a href="admin-laporan.html" class="nav-link text-gray-700 hover:text-green-600">Laporan</a>
+                    <div class="relative group">
+                        <button class="flex items-center space-x-2 text-gray-700 hover:text-green-600 focus:outline-none">
+                            <span id="adminName">Admin</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="absolute right-0 w-48 mt-0 py-2 bg-white rounded-md shadow-xl hidden group-hover:block">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Settings</a>
+                            <a href="#" id="logoutBtn" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Logout</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-green-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="admin.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-green-600">Dashboard</a>
+                    <a href="admin-nasabah.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Nasabah</a>
+                    <a href="admin-transaksi.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Transaksi</a>
+                    <a href="admin-kategori.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Kategori Sampah</a>
+                    <a href="admin-gallery.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Galeri</a>
+                    <a href="admin-laporan.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Laporan</a>
+                    <a href="#" id="mobileLogoutBtn" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-red-600 hover:bg-red-700">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="pt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Welcome Section -->
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold text-gray-900">Selamat Datang, <span id="welcomeName">Admin</span>!</h1>
+                <p class="text-gray-600">Kelola Bank Sampah Anda dengan mudah dan efisien.</p>
+            </div>
+
+            <!-- Statistics Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-sm font-medium text-gray-500">Total Nasabah</h3>
+                            <p class="text-2xl font-semibold text-gray-900" id="totalCustomers">0</p>
+                            <p class="text-sm text-green-600" id="customerGrowth">+0% dari bulan lalu</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-blue-100">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-sm font-medium text-gray-500">Transaksi Hari Ini</h3>
+                            <p class="text-2xl font-semibold text-gray-900" id="todayTransactions">0</p>
+                            <p class="text-sm text-green-600" id="transactionGrowth">+0% dari kemarin</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-yellow-100">
+                            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-sm font-medium text-gray-500">Sampah Terkumpul</h3>
+                            <p class="text-2xl font-semibold text-gray-900" id="totalWaste">0 kg</p>
+                            <p class="text-sm text-green-600" id="wasteGrowth">+0% dari bulan lalu</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-purple-100">
+                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-sm font-medium text-gray-500">Total Saldo</h3>
+                            <p class="text-2xl font-semibold text-gray-900" id="totalBalance">Rp 0</p>
+                            <p class="text-sm text-green-600" id="balanceGrowth">+0% dari bulan lalu</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-8">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-lg font-medium text-gray-900">Transaksi Terbaru</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nasabah</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="recentTransactions">
+                            <!-- Transactions will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <button onclick="window.location.href='admin-nasabah.html'" class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow duration-200">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100">
+                            <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-900">Tambah Nasabah</h3>
+                            <p class="text-sm text-gray-500">Daftarkan nasabah baru</p>
+                        </div>
+                    </div>
+                </button>
+                <button onclick="window.location.href='admin-transaksi.html'" class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow duration-200">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100">
+                            <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-900">Buat Transaksi</h3>
+                            <p class="text-sm text-gray-500">Catat transaksi baru</p>
+                        </div>
+                    </div>
+                </button>
+                <button onclick="window.location.href='admin-laporan.html'" class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow duration-200">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100">
+                            <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-900">Lihat Laporan</h3>
+                            <p class="text-sm text-gray-500">Analisis data dan statistik</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Detail Modal -->
+    <div id="transactionModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
+        <div class="relative top-20 mx-auto p-8 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Detail Transaksi</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Tanggal</label>
+                        <p id="modalDate" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nasabah</label>
+                        <p id="modalCustomer" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Jenis</label>
+                        <p id="modalType" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Jumlah</label>
+                        <p id="modalAmount" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Status</label>
+                        <p id="modalStatus" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                    <div id="modalDetails">
+                        <!-- Additional details will be shown here -->
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 flex justify-end space-x-3">
+                <button type="button" id="closeModalBtn" class="px-4 py-2 bg-green-600 text-white text-base font-medium rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dummy data for demonstration
+        const dummyData = {
+            stats: {
+                totalCustomers: 150,
+                customerGrowth: 12,
+                todayTransactions: 25,
+                transactionGrowth: 8,
+                totalWaste: 2500,
+                wasteGrowth: 15,
+                totalBalance: 12500000,
+                balanceGrowth: 10
+            },
+            recentTransactions: [
+                {
+                    id: 1,
+                    date: '20 Mar 2024',
+                    customer: 'John Doe',
+                    type: 'Setoran Sampah',
+                    amount: 'Rp 250.000',
+                    status: 'Selesai',
+                    details: {
+                        items: [
+                            { name: 'Plastik', amount: '50 kg', price: 'Rp 5.000/kg' },
+                            { name: 'Kertas', amount: '75 kg', price: 'Rp 3.000/kg' }
+                        ]
+                    }
+                },
+                {
+                    id: 2,
+                    date: '19 Mar 2024',
+                    customer: 'Jane Smith',
+                    type: 'Penarikan',
+                    amount: 'Rp 500.000',
+                    status: 'Pending',
+                    details: {
+                        method: 'Transfer Bank',
+                        account: 'BCA 1234567890'
+                    }
+                },
+                {
+                    id: 3,
+                    date: '18 Mar 2024',
+                    customer: 'Mike Johnson',
+                    type: 'Setoran Sampah',
+                    amount: 'Rp 175.000',
+                    status: 'Selesai',
+                    details: {
+                        items: [
+                            { name: 'Botol', amount: '25 kg', price: 'Rp 7.000/kg' }
+                        ]
+                    }
+                }
+            ]
+        };
+
+        // Check if user is logged in and is admin
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        // Update UI with user data
+        document.getElementById('adminName').textContent = user.name;
+        document.getElementById('welcomeName').textContent = user.name;
+
+        // Update statistics
+        function updateStats() {
+            document.getElementById('totalCustomers').textContent = dummyData.stats.totalCustomers;
+            document.getElementById('customerGrowth').textContent = `+${dummyData.stats.customerGrowth}% dari bulan lalu`;
+            document.getElementById('todayTransactions').textContent = dummyData.stats.todayTransactions;
+            document.getElementById('transactionGrowth').textContent = `+${dummyData.stats.transactionGrowth}% dari kemarin`;
+            document.getElementById('totalWaste').textContent = `${dummyData.stats.totalWaste} kg`;
+            document.getElementById('wasteGrowth').textContent = `+${dummyData.stats.wasteGrowth}% dari bulan lalu`;
+            document.getElementById('totalBalance').textContent = `Rp ${dummyData.stats.totalBalance.toLocaleString()}`;
+            document.getElementById('balanceGrowth').textContent = `+${dummyData.stats.balanceGrowth}% dari bulan lalu`;
+        }
+
+        // Render recent transactions
+        function renderTransactions() {
+            const tbody = document.getElementById('recentTransactions');
+            tbody.innerHTML = '';
+
+            dummyData.recentTransactions.forEach(transaction => {
+                const row = document.createElement('tr');
+                row.className = 'transaction-row';
+                row.setAttribute('data-transaction', JSON.stringify(transaction));
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${transaction.date}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${transaction.customer}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${transaction.type}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${transaction.amount}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            transaction.status === 'Selesai' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                        }">
+                            ${transaction.status}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <button class="text-green-600 hover:text-green-900">Detail</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Modal functionality
+        const transactionModal = document.getElementById('transactionModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        function showTransactionDetails(transaction) {
+            document.getElementById('modalDate').textContent = transaction.date;
+            document.getElementById('modalCustomer').textContent = transaction.customer;
+            document.getElementById('modalType').textContent = transaction.type;
+            document.getElementById('modalAmount').textContent = transaction.amount;
+            document.getElementById('modalStatus').textContent = transaction.status;
+
+            const detailsDiv = document.getElementById('modalDetails');
+            if (transaction.type === 'Setoran Sampah') {
+                detailsDiv.innerHTML = `
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium text-gray-700">Detail Sampah</label>
+                        <ul class="mt-2 space-y-2">
+                            ${transaction.details.items.map(item => `
+                                <li class="text-sm text-gray-900">${item.name}: ${item.amount} (${item.price})</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            } else {
+                detailsDiv.innerHTML = `
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium text-gray-700">Metode Penarikan</label>
+                        <p class="mt-1 text-sm text-gray-900">${transaction.details.method}</p>
+                        <p class="mt-1 text-sm text-gray-900">${transaction.details.account}</p>
+                    </div>
+                `;
+            }
+
+            transactionModal.classList.remove('hidden');
+        }
+
+        // Event listeners
+        document.getElementById('recentTransactions').addEventListener('click', (e) => {
+            const row = e.target.closest('.transaction-row');
+            if (row) {
+                const transaction = JSON.parse(row.getAttribute('data-transaction'));
+                showTransactionDetails(transaction);
+            }
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            transactionModal.classList.add('hidden');
+        });
+
+        // Logout functionality
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+        document.getElementById('mobileLogoutBtn').addEventListener('click', logout);
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Initialize the dashboard
+        updateStats();
+        renderTransactions();
+    </script>
+</body>
+</html> 

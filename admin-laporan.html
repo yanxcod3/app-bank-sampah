@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan - Bank Sampah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .nav-link.active {
+            color: #059669;
+            font-weight: 600;
+            background-color: #f0fdf4;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-green-600 text-2xl font-bold">Bank Sampah</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="admin.html" class="nav-link text-gray-700 hover:text-green-600">Dashboard</a>
+                    <a href="admin-nasabah.html" class="nav-link text-gray-700 hover:text-green-600">Nasabah</a>
+                    <a href="admin-transaksi.html" class="nav-link text-gray-700 hover:text-green-600">Transaksi</a>
+                    <a href="admin-kategori.html" class="nav-link text-gray-700 hover:text-green-600">Kategori Sampah</a>
+                    <a href="admin-gallery.html" class="nav-link text-gray-700 hover:text-green-600">Galeri</a>
+                    <a href="admin-laporan.html" class="nav-link active text-gray-700">Laporan</a>
+                    <div class="relative group">
+                        <button class="flex items-center space-x-2 text-gray-700 hover:text-green-600 focus:outline-none">
+                            <span id="adminName">Admin</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="absolute right-0 w-48 mt-0 py-2 bg-white rounded-md shadow-xl hidden group-hover:block">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Settings</a>
+                            <a href="#" id="logoutBtn" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Logout</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-green-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="admin.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Dashboard</a>
+                    <a href="admin-nasabah.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Nasabah</a>
+                    <a href="admin-transaksi.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Transaksi</a>
+                    <a href="admin-kategori.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Kategori Sampah</a>
+                    <a href="admin-gallery.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Galeri</a>
+                    <a href="admin-laporan.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-green-600">Laporan</a>
+                    <a href="#" id="mobileLogoutBtn" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-red-600 hover:bg-red-700">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="pt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Laporan</h1>
+                <div class="flex space-x-4">
+                    <button id="downloadReportBtn" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <svg class="inline-block w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                        Unduh Laporan
+                    </button>
+                    <button id="filterDateBtn" class="bg-white text-gray-700 px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <svg class="inline-block w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        Filter Tanggal
+                    </button>
+                </div>
+            </div>
+
+            <!-- Date Range Filter -->
+            <div id="dateRangeFilter" class="bg-white rounded-lg shadow-sm p-4 mb-6 hidden">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Periode</label>
+                        <select id="periodSelect" class="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <option value="today">Hari Ini</option>
+                            <option value="week">Minggu Ini</option>
+                            <option value="month">Bulan Ini</option>
+                            <option value="year">Tahun Ini</option>
+                            <option value="custom">Kustom</option>
+                        </select>
+                    </div>
+                    <div id="customDateRange" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Dari Tanggal</label>
+                        <input type="date" id="startDate" class="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                    </div>
+                    <div id="customDateRangeEnd" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Sampai Tanggal</label>
+                        <input type="date" id="endDate" class="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                    </div>
+                    <div class="flex items-end">
+                        <button id="applyFilterBtn" class="w-full bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            Terapkan Filter
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-sm font-medium text-gray-500">Total Nasabah</h3>
+                            <p class="text-2xl font-bold text-gray-900">1,234</p>
+                            <p class="text-sm text-green-600">+12% dari bulan lalu</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-blue-100">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-sm font-medium text-gray-500">Total Transaksi</h3>
+                            <p class="text-2xl font-bold text-gray-900">3,456</p>
+                            <p class="text-sm text-green-600">+8% dari bulan lalu</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-yellow-100">
+                            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-sm font-medium text-gray-500">Sampah Terkumpul</h3>
+                            <p class="text-2xl font-bold text-gray-900">5,678 kg</p>
+                            <p class="text-sm text-green-600">+15% dari bulan lalu</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-purple-100">
+                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-sm font-medium text-gray-500">Total Pendapatan</h3>
+                            <p class="text-2xl font-bold text-gray-900">Rp 45.678.000</p>
+                            <p class="text-sm text-green-600">+10% dari bulan lalu</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Sampah Terkumpul per Kategori</h3>
+                    <div style="height: 300px;">
+                        <canvas id="wasteCategoryChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Tren Transaksi</h3>
+                    <div style="height: 300px;">
+                        <canvas id="transactionTrendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Reports -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">Detail Transaksi</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah (kg)</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Harga/kg</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="transactionList">
+                            <!-- Transactions will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pagination -->
+                <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                    <div class="flex-1 flex justify-between sm:hidden">
+                        <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Sebelumnya
+                        </button>
+                        <button class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Selanjutnya
+                        </button>
+                    </div>
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Menampilkan
+                                <span class="font-medium" id="startIndex">1</span>
+                                sampai
+                                <span class="font-medium" id="endIndex">10</span>
+                                dari
+                                <span class="font-medium" id="totalItems">0</span>
+                                hasil
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                <button class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <span class="sr-only">Previous</span>
+                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <button class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <span class="sr-only">Next</span>
+                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dummy data for demonstration
+        const dummyTransactions = [
+            {
+                date: '2024-03-20',
+                category: 'Plastik',
+                amount: 50,
+                pricePerKg: 5000,
+                total: 250000,
+                status: 'completed'
+            },
+            {
+                date: '2024-03-19',
+                category: 'Kertas',
+                amount: 75,
+                pricePerKg: 3000,
+                total: 225000,
+                status: 'completed'
+            },
+            {
+                date: '2024-03-18',
+                category: 'Botol',
+                amount: 30,
+                pricePerKg: 7000,
+                total: 210000,
+                status: 'pending'
+            }
+        ];
+
+        // State management
+        let currentTransactions = [...dummyTransactions];
+        let currentPage = 1;
+        const itemsPerPage = 10;
+
+        // DOM Elements
+        const transactionList = document.getElementById('transactionList');
+        const filterDateBtn = document.getElementById('filterDateBtn');
+        const dateRangeFilter = document.getElementById('dateRangeFilter');
+        const periodSelect = document.getElementById('periodSelect');
+        const customDateRange = document.getElementById('customDateRange');
+        const customDateRangeEnd = document.getElementById('customDateRangeEnd');
+        const applyFilterBtn = document.getElementById('applyFilterBtn');
+        const downloadReportBtn = document.getElementById('downloadReportBtn');
+
+        // Check if user is logged in and is admin
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        // Update UI with user data
+        document.getElementById('adminName').textContent = user.name;
+
+        // Initialize charts
+        function initializeCharts() {
+            // Waste Category Chart
+            const wasteCategoryCtx = document.getElementById('wasteCategoryChart').getContext('2d');
+            new Chart(wasteCategoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Plastik', 'Kertas', 'Botol', 'Lainnya'],
+                    datasets: [{
+                        data: [40, 30, 20, 10],
+                        backgroundColor: [
+                            '#10B981',
+                            '#3B82F6',
+                            '#F59E0B',
+                            '#6B7280'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Transaction Trend Chart
+            const transactionTrendCtx = document.getElementById('transactionTrendChart').getContext('2d');
+            new Chart(transactionTrendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+                    datasets: [{
+                        label: 'Jumlah Transaksi',
+                        data: [65, 59, 80, 81, 56, 55],
+                        borderColor: '#10B981',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Render transactions
+        function renderTransactions() {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedTransactions = currentTransactions.slice(startIndex, endIndex);
+
+            transactionList.innerHTML = '';
+            paginatedTransactions.forEach(transaction => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${new Date(transaction.date).toLocaleDateString('id-ID')}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${transaction.category}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${transaction.amount} kg</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp ${transaction.pricePerKg.toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp ${transaction.total.toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            transaction.status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                        }">
+                            ${transaction.status === 'completed' ? 'Selesai' : 'Pending'}
+                        </span>
+                    </td>
+                `;
+                transactionList.appendChild(row);
+            });
+
+            // Update pagination info
+            document.getElementById('startIndex').textContent = startIndex + 1;
+            document.getElementById('endIndex').textContent = Math.min(endIndex, currentTransactions.length);
+            document.getElementById('totalItems').textContent = currentTransactions.length;
+        }
+
+        // Filter transactions by date
+        function filterTransactionsByDate() {
+            const period = periodSelect.value;
+            let filtered = [...dummyTransactions];
+            const today = new Date();
+            const startDate = new Date(document.getElementById('startDate').value);
+            const endDate = new Date(document.getElementById('endDate').value);
+
+            switch (period) {
+                case 'today':
+                    filtered = filtered.filter(t => {
+                        const date = new Date(t.date);
+                        return date.toDateString() === today.toDateString();
+                    });
+                    break;
+                case 'week':
+                    const weekStart = new Date(today);
+                    weekStart.setDate(today.getDate() - today.getDay());
+                    filtered = filtered.filter(t => {
+                        const date = new Date(t.date);
+                        return date >= weekStart && date <= today;
+                    });
+                    break;
+                case 'month':
+                    const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+                    filtered = filtered.filter(t => {
+                        const date = new Date(t.date);
+                        return date >= monthStart && date <= today;
+                    });
+                    break;
+                case 'year':
+                    const yearStart = new Date(today.getFullYear(), 0, 1);
+                    filtered = filtered.filter(t => {
+                        const date = new Date(t.date);
+                        return date >= yearStart && date <= today;
+                    });
+                    break;
+                case 'custom':
+                    filtered = filtered.filter(t => {
+                        const date = new Date(t.date);
+                        return date >= startDate && date <= endDate;
+                    });
+                    break;
+            }
+
+            currentTransactions = filtered;
+            currentPage = 1;
+            renderTransactions();
+        }
+
+        // Event listeners
+        filterDateBtn.addEventListener('click', () => {
+            dateRangeFilter.classList.toggle('hidden');
+        });
+
+        periodSelect.addEventListener('change', (e) => {
+            customDateRange.classList.toggle('hidden', e.target.value !== 'custom');
+            customDateRangeEnd.classList.toggle('hidden', e.target.value !== 'custom');
+        });
+
+        applyFilterBtn.addEventListener('click', filterTransactionsByDate);
+        downloadReportBtn.addEventListener('click', () => {
+            alert('Laporan akan diunduh dalam format PDF...');
+            // Add your download logic here
+        });
+
+        // Logout functionality
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+        document.getElementById('mobileLogoutBtn').addEventListener('click', logout);
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Initialize the page
+        initializeCharts();
+        renderTransactions();
+    </script>
+</body>
+</html> 

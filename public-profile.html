@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Profile - Bank Sampah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-green-600 text-2xl font-bold">Bank Sampah</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-gray-700 hover:text-green-600">Home</a>
+                    <a href="#about" class="nav-link text-gray-700 hover:text-green-600">About</a>
+                    <a href="#gallery" class="nav-link text-gray-700 hover:text-green-600">Gallery</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-green-600">Contact</a>
+                    <a href="login.html" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition-colors">
+                        Login
+                    </a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-green-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="#home" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Home</a>
+                    <a href="#about" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">About</a>
+                    <a href="#gallery" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Gallery</a>
+                    <a href="#contact" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Contact</a>
+                    <a href="login.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-green-600 hover:bg-green-700">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-20 pb-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+
+            <!-- Profile Header -->
+            <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6">
+                <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                    <div class="relative">
+                        <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-green-500">
+                            <img src="https://yanxcod3.my.id/assets/image/profile.webp" alt="Profile" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="text-center sm:text-left w-full">
+                        <h1 class="text-xl sm:text-2xl font-bold text-gray-900">Ryan Pratama</h1>
+                        <p class="text-gray-600">@yanxcod3</p>
+                        <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                            <div class="bg-green-50 rounded-lg p-3 text-center">
+                                <div class="text-xl sm:text-2xl font-bold text-green-600">Rp 2.5M</div>
+                                <div class="text-sm text-gray-600">Total Saldo</div>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-3 text-center">
+                                <div class="text-xl sm:text-2xl font-bold text-green-600">150</div>
+                                <div class="text-sm text-gray-600">Transaksi</div>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-3 text-center">
+                                <div class="text-xl sm:text-2xl font-bold text-green-600">500 kg</div>
+                                <div class="text-sm text-gray-600">Sampah Terkumpul</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Information -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- User Details -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+                        <h2 class="text-lg sm:text-xl font-semibold text-gray-900 mb-4">Informasi Pengguna</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="bg-gray-50 rounded-lg p-3">
+                                <label class="block text-sm font-medium text-gray-700">Alamat</label>
+                                <p class="mt-1 text-gray-900">Jl. Raya No. 13, Surabaya</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-3">
+                                <label class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
+                                <p class="mt-1 text-gray-900">13 April 2005</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-3">
+                                <label class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
+                                <p class="mt-1 text-gray-900">Laki-laki</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-3">
+                                <label class="block text-sm font-medium text-gray-700">Pekerjaan</label>
+                                <p class="mt-1 text-gray-900">Mahasiswa</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 bg-gray-50 rounded-lg p-3">
+                            <label class="block text-sm font-medium text-gray-700">Bio</label>
+                            <p class="mt-1 text-gray-900">Peduli terhadap lingkungan, memberantas sampah untuk diubah menjadi sumber kehidupan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6 h-full">
+                        <h2 class="text-lg sm:text-xl font-semibold text-gray-900 mb-4">Informasi Tambahan</h2>
+                        <div class="space-y-4">
+                            <div class="bg-gray-50 rounded-lg p-3">
+                                <label class="block text-sm font-medium text-gray-700">Tanggal Bergabung</label>
+                                <p class="mt-1 text-gray-900">1 Januari 2024</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-3">
+                                <label class="block text-sm font-medium text-gray-700">Status Akun</label>
+                                <p class="mt-1 text-gray-900">Aktif</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Logout functionality
+        const logoutBtn = document.getElementById('logoutBtn');
+        const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+
+        function handleLogout() {
+            // Add your logout logic here
+            window.location.href = 'login.html';
+        }
+
+        logoutBtn.addEventListener('click', handleLogout);
+        mobileLogoutBtn.addEventListener('click', handleLogout);
+    </script>
+</body>
+</html> 

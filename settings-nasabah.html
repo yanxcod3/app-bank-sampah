@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Bank Sampah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-green-600 text-2xl font-bold">Bank Sampah</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <div class="relative group">
+                        <button class="flex items-center space-x-2 text-gray-700 hover:text-green-600 focus:outline-none">
+                            <span id="userName">User</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="absolute right-0 w-48 mt-0 py-2 bg-white rounded-md shadow-xl hidden group-hover:block">
+                            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Profile</a>
+                            <a href="settings.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Settings</a>
+                            <a href="#" id="logoutBtn" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Logout</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-green-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="profile.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Profile</a>
+                    <a href="settings.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Settings</a>
+                    <a href="#" id="mobileLogoutBtn" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-red-600 hover:bg-red-700">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-20 pb-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h1 class="text-2xl font-bold text-gray-900 mb-6">Pengaturan Akun</h1>
+                
+                <!-- Profile Settings -->
+                <div class="mb-8">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Profil</h2>
+                    <form class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+                                <input type="text" id="name" name="name" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" id="email" name="email" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700">Nomor Telepon</label>
+                                <input type="tel" id="phone" name="phone" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="address" class="block text-sm font-medium text-gray-700">Alamat</label>
+                                <input type="text" id="address" name="address" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="dob" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
+                                <input type="date" id="dob" name="dob" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="gender" class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
+                                <select id="gender" name="gender" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                    <option value="">Pilih Jenis Kelamin</option>
+                                    <option value="male">Laki-laki</option>
+                                    <option value="female">Perempuan</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="job" class="block text-sm font-medium text-gray-700">Pekerjaan</label>
+                                <input type="text" id="job" name="job" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="bio" class="block text-sm font-medium text-gray-700">Bio</label>
+                            <textarea id="bio" name="bio" rows="3" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Security Settings -->
+                <div class="mb-8">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Keamanan</h2>
+                    <form class="space-y-4">
+                        <div>
+                            <label for="current-password" class="block text-sm font-medium text-gray-700">Password Saat Ini</label>
+                            <input type="password" id="current-password" name="current-password" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="new-password" class="block text-sm font-medium text-gray-700">Password Baru</label>
+                            <input type="password" id="new-password" name="new-password" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="confirm-password" class="block text-sm font-medium text-gray-700">Konfirmasi Password Baru</label>
+                            <input type="password" id="confirm-password" name="confirm-password" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Notification Settings -->
+                <div class="mb-8">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Umum</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Profil Umum</label>
+                                <p class="text-sm text-gray-500">Publikasikan profil kepada nasabah lain</p>
+                            </div>
+                            <button type="button" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-green-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                                <span class="translate-x-5 pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out">
+                                    <span class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity duration-200 ease-in-out" aria-hidden="true">
+                                        <svg class="h-3 w-3 text-green-600" fill="currentColor" viewBox="0 0 12 12">
+                                            <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"/>
+                                        </svg>
+                                    </span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <div class="flex justify-end">
+                    <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        Simpan Perubahan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html> 

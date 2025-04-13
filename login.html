@@ -217,8 +217,16 @@
             const password = document.getElementById('login-password').value;
 
             localStorage.setItem('user', JSON.stringify({
-                    name: 'Ryan Pratama'
-                }));
+                email: 'yanxcod3@gmail.com',
+                name: 'Ryan Pratama',
+                cabang: 'Ketintang',
+                no_hp: '081234567890',
+                alamat: 'Jl. Contoh No. 123, Kota, Indonesia',
+                tanggal_lahir: '13 April 2005',
+                jenis_kelamin: 'Laki-laki',
+                pekerjaan: 'Pengusaha',
+                bio: 'Pengguna ini adalah seorang mahasiswa yang tertarik pada pengembangan web dan teknologi'
+            }));
 
             if (username === 'admin' && password === 'admin') {
                 window.location.href = 'admin.html';

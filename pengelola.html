@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Bank Sampah</title>
+    <title>pengelola Dashboard - Bank Sampah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -32,25 +32,25 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <div class="flex-shrink-0">
-                    <a href="admin.html" class="text-green-600 text-2xl font-bold">Bank Sampah</a>
+                    <a href="pengelola.html" class="text-green-600 text-2xl font-bold">Bank Sampah</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="admin.html" class="nav-link active text-gray-700">Dashboard</a>
-                    <a href="admin-nasabah.html" class="nav-link text-gray-700 hover:text-green-600">Nasabah</a>
-                    <a href="admin-transaksi.html" class="nav-link text-gray-700 hover:text-green-600">Transaksi</a>
-                    <a href="admin-kategori.html" class="nav-link text-gray-700 hover:text-green-600">Kategori Sampah</a>
-                    <a href="admin-gallery.html" class="nav-link text-gray-700 hover:text-green-600">Galeri</a>
-                    <a href="admin-laporan.html" class="nav-link text-gray-700 hover:text-green-600">Laporan</a>
+                    <a href="pengelola.html" class="nav-link active text-gray-700">Dashboard</a>
+                    <a href="pengelola-nasabah.html" class="nav-link text-gray-700 hover:text-green-600">Nasabah</a>
+                    <a href="pengelola-transaksi.html" class="nav-link text-gray-700 hover:text-green-600">Transaksi</a>
+                    <a href="pengelola-kategori.html" class="nav-link text-gray-700 hover:text-green-600">Kategori Sampah</a>
+                    <a href="pengelola-gallery.html" class="nav-link text-gray-700 hover:text-green-600">Galeri</a>
+                    <a href="pengelola-laporan.html" class="nav-link text-gray-700 hover:text-green-600">Laporan</a>
                     <div class="relative group">
                         <button class="flex items-center space-x-2 text-gray-700 hover:text-green-600 focus:outline-none">
-                            <span id="adminName">Admin</span>
+                            <span id="pengelolaName">pengelola</span>
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                             </svg>
                         </button>
                         <div class="absolute right-0 w-48 mt-0 py-2 bg-white rounded-md shadow-xl hidden group-hover:block">
-                            <a href="profile-admin.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Profile</a>
-                            <a href="settings-admin.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Settings</a>
+                            <a href="profile-pengelola.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Profile</a>
+                            <a href="settings-pengelola.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Settings</a>
                             <a href="#" id="logoutBtn" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Logout</a>
                         </div>
                     </div>
@@ -66,12 +66,12 @@
             <!-- Mobile menu -->
             <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
                 <div class="px-2 pt-2 pb-3 space-y-1">
-                    <a href="admin.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-green-600">Dashboard</a>
-                    <a href="admin-nasabah.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Nasabah</a>
-                    <a href="admin-transaksi.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Transaksi</a>
-                    <a href="admin-kategori.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Kategori Sampah</a>
-                    <a href="admin-gallery.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Galeri</a>
-                    <a href="admin-laporan.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Laporan</a>
+                    <a href="pengelola.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-green-600">Dashboard</a>
+                    <a href="pengelola-nasabah.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Nasabah</a>
+                    <a href="pengelola-transaksi.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Transaksi</a>
+                    <a href="pengelola-kategori.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Kategori Sampah</a>
+                    <a href="pengelola-gallery.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Galeri</a>
+                    <a href="pengelola-laporan.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Laporan</a>
                     <a href="#" id="mobileLogoutBtn" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-red-600 hover:bg-red-700">Logout</a>
                 </div>
             </div>
@@ -83,7 +83,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Welcome Section -->
             <div class="mb-8">
-                <h1 class="text-2xl font-bold text-gray-900">Selamat Datang, <span id="welcomeName">Admin</span>!</h1>
+                <h1 class="text-2xl font-bold text-gray-900">Selamat Datang, <span id="welcomeName">pengelola</span>!</h1>
                 <p class="text-gray-600">Kelola Bank Sampah Anda dengan mudah dan efisien.</p>
             </div>
 
@@ -173,7 +173,7 @@
 
             <!-- Quick Actions -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <button onclick="window.location.href='admin-nasabah.html'" class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow duration-200">
+                <button onclick="window.location.href='pengelola-nasabah.html'" class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow duration-200">
                     <div class="flex items-center">
                         <div class="p-3 rounded-full bg-green-100">
                             <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -186,7 +186,7 @@
                         </div>
                     </div>
                 </button>
-                <button onclick="window.location.href='admin-transaksi.html'" class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow duration-200">
+                <button onclick="window.location.href='pengelola-transaksi.html'" class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow duration-200">
                     <div class="flex items-center">
                         <div class="p-3 rounded-full bg-green-100">
                             <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -199,7 +199,7 @@
                         </div>
                     </div>
                 </button>
-                <button onclick="window.location.href='admin-laporan.html'" class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow duration-200">
+                <button onclick="window.location.href='pengelola-laporan.html'" class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow duration-200">
                     <div class="flex items-center">
                         <div class="p-3 rounded-full bg-green-100">
                             <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -311,11 +311,11 @@
             ]
         };
 
-        // Check if user is logged in and is admin
+        // Check if user is logged in and is pengelola
         const user = JSON.parse(localStorage.getItem('user'));
 
         // Update UI with user data
-        document.getElementById('adminName').textContent = user.name;
+        document.getElementById('pengelolaName').textContent = user.name;
         document.getElementById('welcomeName').textContent = user.name;
 
         // Update statistics

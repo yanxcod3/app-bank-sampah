@@ -72,42 +72,45 @@
 
             <!-- Stats Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white rounded-lg shadow-sm p-6">
+                <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6 border-l-4 border-blue-500 transform hover:-translate-y-1">
                     <div class="flex items-center">
-                        <div class="p-3 rounded-full bg-purple-100">
-                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="p-3 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 shadow-inner">
+                            <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h2 class="text-lg font-semibold text-gray-900 mb-1">Transaksi</h2>
+                            <p class="text-2xl font-bold text-blue-600">12</p>
+                            <p class="text-xs text-gray-500 mt-1">Bulan ini</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6 border-l-4 border-yellow-500 transform hover:-translate-y-1">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-gradient-to-br from-yellow-100 to-yellow-200 shadow-inner">
+                            <svg class="w-7 h-7 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h2 class="text-lg font-semibold text-gray-900 mb-1">Sampah Terkumpul</h2>
+                            <p class="text-2xl font-bold text-yellow-600">12 kg</p>
+                            <p class="text-xs text-gray-500 mt-1">Bulan ini</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6 border-l-4 border-green-500 transform hover:-translate-y-1">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-gradient-to-br from-green-100 to-green-200 shadow-inner">
+                            <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <h2 class="text-lg font-semibold text-gray-900">Saldo</h2>
+                            <h2 class="text-lg font-semibold text-gray-900 mb-1">Saldo</h2>
                             <p class="text-2xl font-bold text-green-600">Rp 150.000</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-sm p-6">
-                    <div class="flex items-center">
-                        <div class="p-3 rounded-full bg-blue-100">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                            </svg>
-                        </div>
-                        <div class="ml-4">
-                            <h2 class="text-lg font-semibold text-gray-900">Transaksi</h2>
-                            <p class="text-2xl font-bold text-blue-600">12</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-sm p-6">
-                    <div class="flex items-center">
-                        <div class="p-3 rounded-full bg-yellow-100">
-                            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                            </svg>
-                        </div>
-                        <div class="ml-4">
-                            <h2 class="text-lg font-semibold text-gray-900">Sampah Terkumpul</h2>
-                            <p class="text-2xl font-bold text-yellow-600">25 kg</p>
+                            <p class="text-xs text-gray-500 mt-1">Terakhir diperbarui: Hari ini</p>
                         </div>
                     </div>
                 </div>

@@ -61,7 +61,7 @@
             <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
                 <div class="flex items-center space-x-6">
                     <div class="relative">
-                        <img src="https://yanxcod3.my.id/assets/image/profile.webp" alt="Profile" class="w-32 h-32 rounded-full border-4 border-green-500">
+                        <img id="profileImage" src="https://yanxcod3.my.id/assets/image/profile.webp" alt="Profile" class="w-32 h-32 rounded-full border-4 border-green-500">
                     </div>
                     <div>
                         <h1 id="profileName" class="text-2xl font-bold text-gray-900">Nama Pengguna</h1>
@@ -439,15 +439,20 @@
         if (!user) {
             window.location.href = 'login.html';
         }
-
+        console.log(user);
         document.getElementById('userName').textContent = user.name;
+        document.getElementById('profileImage').src = user.profile_pic ?? document.getElementById('profileImage').src;
         document.getElementById('profileName').textContent = user.name;
         document.getElementById('profileCabang').textContent = 'Cabang ' + user.cabang;
         document.getElementById('profileEmail').textContent = user.email;
         document.getElementById('profileNoHp').textContent = user.no_hp;
         document.getElementById('profileAlamat').textContent = user.alamat;
         document.getElementById('profileTanggalLahir').textContent = user.tanggal_lahir;
-        document.getElementById('profileJenisKelamin').textContent = user.jenis_kelamin;
+        if (user.jenis_kelamin === 'male') {
+            document.getElementById('profileJenisKelamin').textContent = 'Laki-laki';
+        } else {
+            document.getElementById('profileJenisKelamin').textContent = 'Perempuan';
+        }
         document.getElementById('profilePekerjaan').textContent = user.pekerjaan;
 
         function logout() {

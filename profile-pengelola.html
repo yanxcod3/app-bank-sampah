@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - Bank Sampah</title>
+    <title>Profile - Lingkarsa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -18,7 +18,7 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <div class="flex-shrink-0">
-                    <a href="pengelola.html" class="text-green-600 text-2xl font-bold">Bank Sampah</a>
+                    <a href="pengelola.html" class="text-green-600 text-3xl font-bold">Lingkarsa</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="pengelola.html" class="nav-link active text-gray-700">Dashboard</a>
@@ -372,7 +372,8 @@
         if (!user) {
             window.location.href = 'login.html';
         }
-        console.log(user);
+        
+        // Mengisi data profil dari localStorage
         document.getElementById('pengelolaName').textContent = user.name;
         document.getElementById('profileImage').src = user.profile_pic ?? document.getElementById('profileImage').src;
         document.getElementById('profileName').textContent = user.name;
@@ -388,6 +389,7 @@
         }
         document.getElementById('profilePekerjaan').textContent = user.pekerjaan;
 
+        // Fungsi logout
         function logout() {
             localStorage.removeItem('user');
             window.location.href = 'index.html';
@@ -411,256 +413,25 @@
             }
         });
         
-        // Interaktivitas untuk tabel riwayat
+        // Tombol refresh untuk aktivitas
         document.addEventListener('DOMContentLoaded', function() {
-            // Animasi untuk card ringkasan
-            const summaryCards = document.querySelectorAll('.grid.grid-cols-1.md\\:grid-cols-3.gap-4.mb-6 > div');
-            summaryCards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.classList.add('animate-fadeIn');
-                }, 100 * index);
-            });
+            const refreshButton = document.querySelector('button.p-2:last-child');
             
-            // Hover efek untuk baris tabel
-            const tableRows = document.querySelectorAll('tbody tr');
-            tableRows.forEach(row => {
-                row.addEventListener('mouseenter', function() {
-                    this.classList.add('bg-gray-50', 'shadow-sm');
-                    this.style.transition = 'all 0.2s ease';
-                    this.style.zIndex = '10';
-                });
-                
-                row.addEventListener('mouseleave', function() {
-                    this.classList.remove('bg-gray-50', 'shadow-sm');
-                    this.style.zIndex = '0';
-                });
-            });
-            
-            // Tombol Detail
-            const detailButtons = document.querySelectorAll('a.text-blue-600');
-            detailButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const row = this.closest('tr');
-                    const month = row.querySelector('td:first-child .text-sm.font-medium').textContent;
-                    
-                    alert(`Detail transaksi untuk bulan ${month} akan segera ditampilkan.`);
-                });
-            });
-            
-            // Tombol Unduh
-            const downloadButton = document.querySelector('button.bg-green-100.text-green-700');
-            if (downloadButton) {
-                downloadButton.addEventListener('click', function() {
-                    alert('Riwayat transaksi sedang dipersiapkan untuk diunduh.');
+            if (refreshButton) {
+                refreshButton.addEventListener('click', function() {
+                    alert('Menyegarkan daftar aktivitas terbaru');
                 });
             }
             
-            // Tombol Filter
-            const filterButton = document.querySelector('button.bg-blue-100.text-blue-700');
-            if (filterButton) {
-                filterButton.addEventListener('click', function() {
-                    const filterOptions = ['Tahun Ini', '2024', '2023', '2022'];
-                    const optionsHtml = filterOptions.map(option => 
-                        `<div class="px-4 py-2 hover:bg-blue-50 cursor-pointer">${option}</div>`
-                    ).join('');
-                    
-                    const filterPopup = document.createElement('div');
-                    filterPopup.className = 'absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border border-gray-100 overflow-hidden';
-                    filterPopup.innerHTML = optionsHtml;
-                    
-                    // Hapus popup yang sudah ada jika ada
-                    const existingPopup = document.querySelector('.filter-popup');
-                    if (existingPopup) {
-                        existingPopup.remove();
-                    }
-                    
-                    filterPopup.classList.add('filter-popup');
-                    
-                    // Posisikan popup di bawah tombol filter
-                    this.parentNode.style.position = 'relative';
-                    this.parentNode.appendChild(filterPopup);
-                    
-                    // Tutup popup saat klik di luar
-                    document.addEventListener('click', function closeFilter(e) {
-                        if (!filterPopup.contains(e.target) && e.target !== filterButton) {
-                            filterPopup.remove();
-                            document.removeEventListener('click', closeFilter);
-                        }
-                    });
-                    
-                    // Tambahkan event untuk opsi filter
-                    const options = filterPopup.querySelectorAll('div');
-                    options.forEach(option => {
-                        option.addEventListener('click', function() {
-                            alert(`Filter diterapkan: Data transaksi tahun ${this.textContent}`);
-                            filterPopup.remove();
-                            
-                            // Simulasi filter dengan efek loading
-                            const tableBody = document.querySelector('tbody');
-                            tableBody.style.opacity = '0.5';
-                            
-                            setTimeout(() => {
-                                tableBody.style.opacity = '1';
-                                
-                                // Jika filter bukan "Semua Tahun", tampilkan pesan informasi
-                                if (this.textContent !== 'Semua Tahun') {
-                                    const infoText = document.querySelector('.text-sm.text-gray-500');
-                                    if (infoText) {
-                                        infoText.textContent = `Menampilkan transaksi tahun ${this.textContent}`;
-                                    }
-                                }
-                            }, 600);
-                        });
-                    });
-                });
-            }
-            
-            // Tambahkan animasi loading saat klik pagination
+            // Pagination untuk aktivitas
             const paginationLinks = document.querySelectorAll('nav[aria-label="Pagination"] a');
             paginationLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
-                    
-                    // Efek loading pada tabel
-                    const tableBody = document.querySelector('tbody');
-                    tableBody.style.opacity = '0.5';
-                    tableBody.style.transition = 'opacity 0.3s ease';
-                    
-                    setTimeout(() => {
-                        tableBody.style.opacity = '1';
-                        alert('Halaman berikutnya akan segera dimuat.');
-                    }, 800);
-                });
-            });
-            
-            // Tambahkan CSS animasi
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: translateY(10px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                .animate-fadeIn {
-                    animation: fadeIn 0.5s ease forwards;
-                }
-                @keyframes spin {
-                    from { transform: rotate(0deg); }
-                    to { transform: rotate(360deg); }
-                }
-                .animate-spin {
-                    animation: spin 0.8s linear infinite;
-                }
-            `;
-            document.head.appendChild(style);
-            
-            // Handling untuk tabel aktivitas
-            const activityRows = document.querySelectorAll('#activityTableBody > div');
-            
-            // Animasi masuk untuk aktivitas
-            activityRows.forEach((row, index) => {
-                row.style.opacity = '0';
-                row.style.transform = 'translateY(10px)';
-                setTimeout(() => {
-                    row.style.transition = 'all 0.3s ease';
-                    row.style.opacity = '1';
-                    row.style.transform = 'translateY(0)';
-                }, 100 * index);
-            });
-
-            // Filter dan tombol refresh
-            const activityFilterBtn = document.querySelector('button.p-2:first-child');
-            const refreshButton = document.querySelector('button.p-2:last-child');
-            
-            if (activityFilterBtn) {
-                activityFilterBtn.addEventListener('click', function() {
-                    alert('Filter aktivitas berdasarkan: Semua, Selesai, atau Dalam Proses');
-                });
-            }
-            
-            if (refreshButton) {
-                refreshButton.addEventListener('click', function() {
-                    this.querySelector('svg').classList.add('animate-spin');
-                    
-                    setTimeout(() => {
-                        this.querySelector('svg').classList.remove('animate-spin');
-                        alert('Menyegarkan daftar aktivitas terbaru');
-                    }, 800);
-                });
-            }
-            
-            // Pagination buttons
-            const paginationButtons = document.querySelectorAll('.flex.space-x-1.text-sm button');
-            paginationButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    if (!this.classList.contains('bg-gray-800')) {
-                        document.querySelector('.flex.space-x-1.text-sm button.bg-gray-800')?.classList.replace('bg-gray-800', 'bg-gray-100');
-                        document.querySelector('.flex.space-x-1.text-sm button.bg-gray-800')?.classList.replace('text-white', 'text-gray-600');
-                        
-                        this.classList.replace('bg-gray-100', 'bg-gray-800');
-                        this.classList.replace('text-gray-600', 'text-white');
-                        
-                        alert('Menampilkan halaman aktivitas lainnya');
-                    }
+                    alert('Halaman berikutnya akan segera dimuat.');
                 });
             });
         });
-
-        // Contoh cara menambahkan aktivitas baru secara dinamis (untuk pengembangan ke depan)
-        function addActivity(activity) {
-            const activityList = document.getElementById('activityTableBody');
-            const newActivity = document.createElement('div');
-            newActivity.className = 'relative';
-            
-            newActivity.innerHTML = `
-                <div class="flex">
-                    <div class="mr-4 relative">
-                        <div class="absolute left-0 top-0 w-8 h-8 rounded-full ${activity.iconBg || 'bg-green-500'} flex items-center justify-center z-10">
-                            <svg class="h-4 w-4 ${activity.iconColor || 'text-white'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${activity.icon}"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="flex-1 pl-6">
-                        <h3 class="text-sm font-medium text-gray-900 mb-1">${activity.type}</h3>
-                        <p class="text-sm text-gray-600">${activity.description}</p>
-                        <p class="text-xs text-gray-500 mt-1">${activity.date} · ${activity.time}</p>
-                    </div>
-                </div>
-            `;
-            
-            // Animasi untuk aktivitas baru
-            newActivity.style.opacity = '0';
-            newActivity.style.transform = 'translateY(-10px)';
-            
-            // Tambahkan ke awal list (paling atas)
-            activityList.prepend(newActivity);
-            
-            // Animasi masuk
-            setTimeout(() => {
-                newActivity.style.transition = 'all 0.3s ease';
-                newActivity.style.opacity = '1';
-                newActivity.style.transform = 'translateY(0)';
-            }, 100);
-            
-            return newActivity;
-        }
-
-        // Menambahkan contoh penggunaan (hanya untuk demo)
-        // Uncomment kode di bawah ini jika ingin mendemonstrasikan fungsi addActivity
-        /*
-        setTimeout(() => {
-            const newActivity = {
-                type: 'Penambahan Nasabah Baru',
-                icon: 'M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z',
-                date: '25 Juli 2023',
-                time: '08:45 WIB',
-                description: 'Menambahkan nasabah baru: Rudi Hartono dari Kelurahan Sukamaju',
-                iconBg: 'bg-teal-500'
-            };
-            addActivity(newActivity);
-        }, 3000);
-        */
     </script>
 </body>
 </html> 

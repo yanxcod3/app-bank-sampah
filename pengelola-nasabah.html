@@ -25,25 +25,25 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <div class="flex-shrink-0">
-                    <a href="admin.html" class="text-green-600 text-2xl font-bold">Bank Sampah</a>
+                    <a href="pengelola.html" class="text-green-600 text-2xl font-bold">Bank Sampah</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="admin.html" class="nav-link text-gray-700 hover:text-green-600">Dashboard</a>
-                    <a href="admin-nasabah.html" class="nav-link active text-gray-700">Nasabah</a>
-                    <a href="admin-transaksi.html" class="nav-link text-gray-700 hover:text-green-600">Transaksi</a>
-                    <a href="admin-kategori.html" class="nav-link text-gray-700 hover:text-green-600">Kategori Sampah</a>
-                    <a href="admin-gallery.html" class="nav-link text-gray-700 hover:text-green-600">Galeri</a>
-                    <a href="admin-laporan.html" class="nav-link text-gray-700 hover:text-green-600">Laporan</a>
+                    <a href="pengelola.html" class="nav-link text-gray-700 hover:text-green-600">Dashboard</a>
+                    <a href="pengelola-nasabah.html" class="nav-link active text-gray-700">Nasabah</a>
+                    <a href="pengelola-transaksi.html" class="nav-link text-gray-700 hover:text-green-600">Transaksi</a>
+                    <a href="pengelola-kategori.html" class="nav-link text-gray-700 hover:text-green-600">Kategori Sampah</a>
+                    <a href="pengelola-gallery.html" class="nav-link text-gray-700 hover:text-green-600">Galeri</a>
+                    <a href="pengelola-laporan.html" class="nav-link text-gray-700 hover:text-green-600">Laporan</a>
                     <div class="relative group">
                         <button class="flex items-center space-x-2 text-gray-700 hover:text-green-600 focus:outline-none">
-                            <span id="adminName">Admin</span>
+                            <span id="pengelolaName">pengelola</span>
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                             </svg>
                         </button>
                         <div class="absolute right-0 w-48 mt-0 py-2 bg-white rounded-md shadow-xl hidden group-hover:block">
-                            <a href="profile-admin.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Profile</a>
-                            <a href="settings-admin.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Settings</a>
+                            <a href="profile-pengelola.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Profile</a>
+                            <a href="settings-pengelola.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">Settings</a>
                             <a href="#" id="logoutBtn" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Logout</a>
                         </div>
                     </div>
@@ -59,12 +59,12 @@
             <!-- Mobile menu -->
             <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
                 <div class="px-2 pt-2 pb-3 space-y-1">
-                    <a href="admin.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Dashboard</a>
-                    <a href="admin-nasabah.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-green-600">Nasabah</a>
-                    <a href="admin-transaksi.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Transaksi</a>
-                    <a href="admin-kategori.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Kategori Sampah</a>
-                    <a href="admin-gallery.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Galeri</a>
-                    <a href="admin-laporan.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Laporan</a>
+                    <a href="pengelola.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Dashboard</a>
+                    <a href="pengelola-nasabah.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-green-600">Nasabah</a>
+                    <a href="pengelola-transaksi.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Transaksi</a>
+                    <a href="pengelola-kategori.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Kategori Sampah</a>
+                    <a href="pengelola-gallery.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Galeri</a>
+                    <a href="pengelola-laporan.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-green-50">Laporan</a>
                     <a href="#" id="mobileLogoutBtn" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-red-600 hover:bg-red-700">Logout</a>
                 </div>
             </div>
@@ -275,11 +275,11 @@
         const statusFilter = document.getElementById('statusFilter');
         const sortBy = document.getElementById('sortBy');
 
-        // Check if user is logged in and is admin
+        // Check if user is logged in and is pengelola
         const user = JSON.parse(localStorage.getItem('user'));
 
         // Update UI with user data
-        document.getElementById('adminName').textContent = user.name;
+        document.getElementById('pengelolaName').textContent = user.name;
 
         // Render customers
         function renderCustomers() {

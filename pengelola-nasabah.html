@@ -133,10 +133,10 @@
                 <!-- Pagination -->
                 <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                     <div class="flex-1 flex justify-between sm:hidden">
-                        <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        <button id="mobilePrevBtn" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                             Sebelumnya
                         </button>
-                        <button class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        <button id="mobileNextBtn" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                             Selanjutnya
                         </button>
                     </div>
@@ -154,13 +154,13 @@
                         </div>
                         <div>
                             <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                                <button class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                <button id="prevPageBtn" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                     <span class="sr-only">Previous</span>
                                     <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                                     </svg>
                                 </button>
-                                <button class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                <button id="nextPageBtn" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                     <span class="sr-only">Next</span>
                                     <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -371,8 +371,10 @@
         const searchInput = document.getElementById('searchInput');
         const statusFilter = document.getElementById('statusFilter');
         const sortBy = document.getElementById('sortBy');
-        const prevButton = document.querySelector('.rounded-l-md');
-        const nextButton = document.querySelector('.rounded-r-md');
+        const prevPageBtn = document.getElementById('prevPageBtn');
+        const nextPageBtn = document.getElementById('nextPageBtn');
+        const mobilePrevBtn = document.getElementById('mobilePrevBtn');
+        const mobileNextBtn = document.getElementById('mobileNextBtn');
 
         // Load customers from localStorage or use dummyData if none exists
         function loadCustomers() {
@@ -407,64 +409,76 @@
             const paginatedCustomers = currentCustomers.slice(startIndex, endIndex);
 
             customerList.innerHTML = '';
-            paginatedCustomers.forEach(customer => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${customer.name}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${customer.email}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${customer.phone}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp ${customer.balance.toLocaleString()}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            customer.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                        }">
-                            ${customer.status === 'active' ? 'Aktif' : 'Tidak Aktif'}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <button class="text-green-600 hover:text-green-900 mr-3 edit-btn" data-id="${customer.id}">Edit</button>
-                        <button class="text-red-600 hover:text-red-900 delete-btn" data-id="${customer.id}">Hapus</button>
-                    </td>
-                `;
-                customerList.appendChild(row);
-            });
-
-            // Add event listeners to buttons
-            document.querySelectorAll('.edit-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const id = parseInt(btn.getAttribute('data-id'));
-                    editCustomer(id);
+            
+            if (paginatedCustomers.length === 0) {
+                const emptyRow = document.createElement('tr');
+                emptyRow.innerHTML = `<td colspan="6" class="px-6 py-4 text-center text-gray-500">Tidak ada nasabah yang ditemukan</td>`;
+                customerList.appendChild(emptyRow);
+            } else {
+                paginatedCustomers.forEach(customer => {
+                    const row = createCustomerRow(customer);
+                    customerList.appendChild(row);
                 });
-            });
+            }
 
-            document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const id = parseInt(btn.getAttribute('data-id'));
-                    deleteCustomer(id);
-                });
-            });
+            updatePagination();
+        }
+
+        // Create customer row
+        function createCustomerRow(customer) {
+            const row = document.createElement('tr');
+            row.className = 'customer-row';
+            row.setAttribute('data-customer', JSON.stringify(customer));
+            row.innerHTML = `
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${customer.name}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${customer.email}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${customer.phone}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp ${customer.balance.toLocaleString()}</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        customer.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                    }">
+                        ${customer.status === 'active' ? 'Aktif' : 'Tidak Aktif'}
+                    </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <button onclick="editCustomer(${customer.id})" class="text-green-600 hover:text-green-900 mr-3">Edit</button>
+                    <button onclick="deleteCustomer(${customer.id})" class="text-red-600 hover:text-red-900">Hapus</button>
+                </td>
+            `;
+            return row;
+        }
+
+        // Update pagination info and button states
+        function updatePagination() {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, currentCustomers.length);
 
             // Update pagination info
             document.getElementById('startIndex').textContent = currentCustomers.length > 0 ? startIndex + 1 : 0;
-            document.getElementById('endIndex').textContent = Math.min(endIndex, currentCustomers.length);
+            document.getElementById('endIndex').textContent = endIndex;
             document.getElementById('totalItems').textContent = currentCustomers.length;
 
             // Update pagination buttons state
-            prevButton.disabled = currentPage === 1;
-            nextButton.disabled = endIndex >= currentCustomers.length;
+            updatePaginationButtons(startIndex, endIndex);
+        }
+
+        // Update pagination buttons
+        function updatePaginationButtons(startIndex, endIndex) {
+            // Update desktop pagination buttons
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = endIndex >= currentCustomers.length;
             
             // Visual indicator for disabled buttons
-            if (prevButton.disabled) {
-                prevButton.classList.add('opacity-50', 'cursor-not-allowed');
-            } else {
-                prevButton.classList.remove('opacity-50', 'cursor-not-allowed');
-            }
+            prevPageBtn.classList.toggle('opacity-50', currentPage === 1);
+            nextPageBtn.classList.toggle('opacity-50', endIndex >= currentCustomers.length);
             
-            if (nextButton.disabled) {
-                nextButton.classList.add('opacity-50', 'cursor-not-allowed');
-            } else {
-                nextButton.classList.remove('opacity-50', 'cursor-not-allowed');
-            }
+            // Update mobile pagination buttons
+            mobilePrevBtn.disabled = currentPage === 1;
+            mobileNextBtn.disabled = endIndex >= currentCustomers.length;
+            
+            mobilePrevBtn.classList.toggle('opacity-50', currentPage === 1);
+            mobileNextBtn.classList.toggle('opacity-50', endIndex >= currentCustomers.length);
         }
 
         // Show modal for adding/editing customer
@@ -490,9 +504,70 @@
             customerModal.classList.remove('hidden');
         }
 
+        // Validate form before submission
+        function validateCustomerForm() {
+            const username = document.getElementById('username').value;
+            if (!username) {
+                alert('Username harus diisi');
+                return false;
+            }
+            
+            const fullName = document.getElementById('fullName').value;
+            if (!fullName) {
+                alert('Nama lengkap harus diisi');
+                return false;
+            }
+            
+            const email = document.getElementById('email').value;
+            if (!email) {
+                alert('Email harus diisi');
+                return false;
+            }
+            
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Format email tidak valid');
+                return false;
+            }
+            
+            const phone = document.getElementById('phone').value;
+            if (!phone) {
+                alert('Nomor telepon harus diisi');
+                return false;
+            }
+            
+            // Basic phone validation
+            if (!/^\d+$/.test(phone)) {
+                alert('Nomor telepon hanya boleh berisi angka');
+                return false;
+            }
+            
+            const address = document.getElementById('address').value;
+            if (!address) {
+                alert('Alamat harus diisi');
+                return false;
+            }
+            
+            // If adding new customer, password is required
+            if (!editingCustomerId) {
+                const password = document.getElementById('password').value;
+                if (!password) {
+                    alert('Password harus diisi untuk nasabah baru');
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
         // Handle form submission
         function handleCustomerSubmit(e) {
             e.preventDefault();
+            
+            if (!validateCustomerForm()) {
+                return;
+            }
             
             const formData = new FormData(customerForm);
             const customerData = {
@@ -541,10 +616,18 @@
             }
 
             // Save to localStorage
-            localStorage.setItem('customers', JSON.stringify(currentCustomers));
+            saveCustomers();
             
             customerModal.classList.add('hidden');
             renderCustomers();
+            
+            // Show success message
+            alert(editingCustomerId ? 'Nasabah berhasil diperbarui' : 'Nasabah baru berhasil ditambahkan');
+        }
+
+        // Save customers to localStorage
+        function saveCustomers() {
+            localStorage.setItem('customers', JSON.stringify(currentCustomers));
         }
 
         // Edit customer
@@ -560,8 +643,9 @@
             if (confirm('Apakah Anda yakin ingin menghapus nasabah ini?')) {
                 currentCustomers = currentCustomers.filter(c => c.id !== id);
                 // Save to localStorage
-                localStorage.setItem('customers', JSON.stringify(currentCustomers));
+                saveCustomers();
                 renderCustomers();
+                alert('Nasabah berhasil dihapus');
             }
         }
 
@@ -572,7 +656,7 @@
             const sortValue = sortBy.value;
 
             // Get saved customers from localStorage
-            const savedCustomers = JSON.parse(localStorage.getItem('customers'));
+            const savedCustomers = JSON.parse(localStorage.getItem('customers')) || dummyCustomers;
             let filtered = [...savedCustomers];
 
             // Apply search
@@ -609,6 +693,13 @@
         }
 
         // Page navigation
+        function goToPreviousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderCustomers();
+            }
+        }
+
         function goToNextPage() {
             if (currentPage * itemsPerPage < currentCustomers.length) {
                 currentPage++;
@@ -616,11 +707,16 @@
             }
         }
 
-        function goToPrevPage() {
-            if (currentPage > 1) {
-                currentPage--;
-                renderCustomers();
-            }
+        // Logout functionality
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
         }
 
         // Event listeners
@@ -643,28 +739,22 @@
             });
             
             // Pagination event listeners
-            prevButton.addEventListener('click', goToPrevPage);
-            nextButton.addEventListener('click', goToNextPage);
+            prevPageBtn.addEventListener('click', goToPreviousPage);
+            nextPageBtn.addEventListener('click', goToNextPage);
+            mobilePrevBtn.addEventListener('click', goToPreviousPage);
+            mobileNextBtn.addEventListener('click', goToNextPage);
             
             // Logout functionality
-            function logout() {
-                localStorage.removeItem('user');
-                window.location.href = 'index.html';
-            }
-            
             document.getElementById('logoutBtn').addEventListener('click', logout);
             document.getElementById('mobileLogoutBtn').addEventListener('click', logout);
             
             // Mobile menu toggle
             const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
             
             // Close mobile menu when clicking outside
             document.addEventListener('click', (e) => {
+                const mobileMenu = document.getElementById('mobile-menu');
                 if (mobileMenu && !mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
                     mobileMenu.classList.add('hidden');
                 }
